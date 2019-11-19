@@ -30,6 +30,7 @@
         {
             this.metroButton1 = new MetroFramework.Controls.MetroButton();
             this.metroButton2 = new MetroFramework.Controls.MetroButton();
+            this.metroButton3 = new MetroFramework.Controls.MetroButton();
             this.SuspendLayout();
             // 
             // metroButton1
@@ -56,11 +57,24 @@
             this.metroButton2.Text = "metroButton2";
             this.metroButton2.Theme = MetroFramework.MetroThemeStyle.Light;
             // 
+            // metroButton3
+            // 
+            this.metroButton3.Highlight = false;
+            this.metroButton3.Location = new System.Drawing.Point(490, 159);
+            this.metroButton3.Name = "metroButton3";
+            this.metroButton3.Size = new System.Drawing.Size(274, 126);
+            this.metroButton3.Style = MetroFramework.MetroColorStyle.Blue;
+            this.metroButton3.StyleManager = null;
+            this.metroButton3.TabIndex = 2;
+            this.metroButton3.Text = "metroButton3";
+            this.metroButton3.Theme = MetroFramework.MetroThemeStyle.Light;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.metroButton3);
             this.Controls.Add(this.metroButton2);
             this.Controls.Add(this.metroButton1);
             this.Name = "Form1";
@@ -73,6 +87,7 @@
 
         private MetroFramework.Controls.MetroButton metroButton1;
         private MetroFramework.Controls.MetroButton metroButton2;
+        private MetroFramework.Controls.MetroButton metroButton3;
     }
 }
 
