@@ -28,13 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.metroButton1 = new MetroFramework.Controls.MetroButton();
+            this.SuspendLayout();
+            // 
+            // metroButton1
+            // 
+            this.metroButton1.Highlight = false;
+            this.metroButton1.Location = new System.Drawing.Point(90, 82);
+            this.metroButton1.Name = "metroButton1";
+            this.metroButton1.Size = new System.Drawing.Size(327, 79);
+            this.metroButton1.Style = MetroFramework.MetroColorStyle.Blue;
+            this.metroButton1.StyleManager = null;
+            this.metroButton1.TabIndex = 0;
+            this.metroButton1.Text = "metroButton1";
+            this.metroButton1.Theme = MetroFramework.MetroThemeStyle.Light;
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.metroButton1);
+            this.Name = "Form1";
             this.Text = "Form1";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private MetroFramework.Controls.MetroButton metroButton1;
     }
 }
 
