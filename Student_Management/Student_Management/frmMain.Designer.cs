@@ -28,269 +28,279 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.系部信息ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.班级信息ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.学生信息ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.课程信息ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.学生选课表ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lINQ示例ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.系统ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.退出 = new System.Windows.Forms.ToolStripButton();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.LoginInfo = new System.Windows.Forms.ToolStripStatusLabel();
+            MetroFramework.Controls.MetroLink metroLink1;
             this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
-            this.metroToolTip1 = new MetroFramework.Components.MetroToolTip();
-            this.metroToolTip2 = new MetroFramework.Components.MetroToolTip();
             this.metroToggle1 = new MetroFramework.Controls.MetroToggle();
             this.metroTabControl2 = new MetroFramework.Controls.MetroTabControl();
-            this.menuStrip1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
+            this.系部信息Tile = new MetroFramework.Controls.MetroTile();
+            this.班级信息Tile = new MetroFramework.Controls.MetroTile();
+            this.学生信息Tile = new MetroFramework.Controls.MetroTile();
+            this.课程信息Tile = new MetroFramework.Controls.MetroTile();
+            this.学生选课表Tile = new MetroFramework.Controls.MetroTile();
+            this.LINQTile = new MetroFramework.Controls.MetroTile();
+            this.关于Tile = new MetroFramework.Controls.MetroTile();
+            this.退出Tile = new MetroFramework.Controls.MetroTile();
+            this.metroTile1 = new MetroFramework.Controls.MetroTile();
+            this.metroStyleManager = new MetroFramework.Components.MetroStyleManager();
+            this.metroTile2 = new MetroFramework.Controls.MetroTile();
+            metroLink1 = new MetroFramework.Controls.MetroLink();
             this.SuspendLayout();
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.系部信息ToolStripMenuItem,
-            this.班级信息ToolStripMenuItem,
-            this.学生信息ToolStripMenuItem,
-            this.课程信息ToolStripMenuItem,
-            this.学生选课表ToolStripMenuItem,
-            this.lINQ示例ToolStripMenuItem,
-            this.系统ToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(20, 60);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(825, 28);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // 系部信息ToolStripMenuItem
-            // 
-            this.系部信息ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("系部信息ToolStripMenuItem.Image")));
-            this.系部信息ToolStripMenuItem.Name = "系部信息ToolStripMenuItem";
-            this.系部信息ToolStripMenuItem.Size = new System.Drawing.Size(101, 24);
-            this.系部信息ToolStripMenuItem.Text = "系部信息";
-            this.系部信息ToolStripMenuItem.Click += new System.EventHandler(this.系部信息ToolStripMenuItem_Click);
-            // 
-            // 班级信息ToolStripMenuItem
-            // 
-            this.班级信息ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("班级信息ToolStripMenuItem.Image")));
-            this.班级信息ToolStripMenuItem.Name = "班级信息ToolStripMenuItem";
-            this.班级信息ToolStripMenuItem.Size = new System.Drawing.Size(101, 24);
-            this.班级信息ToolStripMenuItem.Text = "班级信息";
-            this.班级信息ToolStripMenuItem.Click += new System.EventHandler(this.班级信息ToolStripMenuItem_Click);
-            // 
-            // 学生信息ToolStripMenuItem
-            // 
-            this.学生信息ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("学生信息ToolStripMenuItem.Image")));
-            this.学生信息ToolStripMenuItem.Name = "学生信息ToolStripMenuItem";
-            this.学生信息ToolStripMenuItem.Size = new System.Drawing.Size(101, 24);
-            this.学生信息ToolStripMenuItem.Text = "学生信息";
-            this.学生信息ToolStripMenuItem.Click += new System.EventHandler(this.学生信息ToolStripMenuItem_Click);
-            // 
-            // 课程信息ToolStripMenuItem
-            // 
-            this.课程信息ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("课程信息ToolStripMenuItem.Image")));
-            this.课程信息ToolStripMenuItem.Name = "课程信息ToolStripMenuItem";
-            this.课程信息ToolStripMenuItem.Size = new System.Drawing.Size(101, 24);
-            this.课程信息ToolStripMenuItem.Text = "课程信息";
-            this.课程信息ToolStripMenuItem.Click += new System.EventHandler(this.课程信息ToolStripMenuItem_Click);
-            // 
-            // 学生选课表ToolStripMenuItem
-            // 
-            this.学生选课表ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("学生选课表ToolStripMenuItem.Image")));
-            this.学生选课表ToolStripMenuItem.Name = "学生选课表ToolStripMenuItem";
-            this.学生选课表ToolStripMenuItem.Size = new System.Drawing.Size(116, 24);
-            this.学生选课表ToolStripMenuItem.Text = "学生选课表";
-            // 
-            // lINQ示例ToolStripMenuItem
-            // 
-            this.lINQ示例ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("lINQ示例ToolStripMenuItem.Image")));
-            this.lINQ示例ToolStripMenuItem.Name = "lINQ示例ToolStripMenuItem";
-            this.lINQ示例ToolStripMenuItem.Size = new System.Drawing.Size(107, 24);
-            this.lINQ示例ToolStripMenuItem.Text = "LINQ示例";
-            // 
-            // 系统ToolStripMenuItem
-            // 
-            this.系统ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.关于ToolStripMenuItem});
-            this.系统ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("系统ToolStripMenuItem.Image")));
-            this.系统ToolStripMenuItem.Name = "系统ToolStripMenuItem";
-            this.系统ToolStripMenuItem.Size = new System.Drawing.Size(71, 24);
-            this.系统ToolStripMenuItem.Text = "系统";
-            // 
-            // 关于ToolStripMenuItem
-            // 
-            this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
-            this.关于ToolStripMenuItem.Size = new System.Drawing.Size(114, 26);
-            this.关于ToolStripMenuItem.Text = "关于";
-            this.关于ToolStripMenuItem.Click += new System.EventHandler(this.关于ToolStripMenuItem_Click);
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton2,
-            this.toolStripSeparator1,
-            this.退出});
-            this.toolStrip1.Location = new System.Drawing.Point(20, 88);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(825, 27);
-            this.toolStrip1.TabIndex = 1;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(24, 24);
-            this.toolStripButton2.Text = "toolStripButton2";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
-            // 
-            // 退出
-            // 
-            this.退出.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.退出.Image = ((System.Drawing.Image)(resources.GetObject("退出.Image")));
-            this.退出.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.退出.Name = "退出";
-            this.退出.Size = new System.Drawing.Size(24, 24);
-            this.退出.Text = "toolStripButton1";
-            this.退出.ToolTipText = "退出";
-            this.退出.Click += new System.EventHandler(this.退出ToolStripMenuItem_Click);
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1,
-            this.LoginInfo});
-            this.statusStrip1.Location = new System.Drawing.Point(20, 427);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(825, 25);
-            this.statusStrip1.TabIndex = 2;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(223, 20);
-            this.toolStripStatusLabel1.Text = "项目设计：许程远 西北工业大学";
-            this.toolStripStatusLabel1.Click += new System.EventHandler(this.toolStripStatusLabel1_Click);
-            // 
-            // LoginInfo
-            // 
-            this.LoginInfo.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.LoginInfo.Name = "LoginInfo";
-            this.LoginInfo.Size = new System.Drawing.Size(587, 20);
-            this.LoginInfo.Spring = true;
-            this.LoginInfo.Text = "登录信息";
-            this.LoginInfo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.LoginInfo.Click += new System.EventHandler(this.LoginInfo_Click);
             // 
             // metroTabControl1
             // 
+            this.metroTabControl1.CustomBackground = false;
+            this.metroTabControl1.FontSize = MetroFramework.MetroTabControlSize.Medium;
+            this.metroTabControl1.FontWeight = MetroFramework.MetroTabControlWeight.Light;
             this.metroTabControl1.Location = new System.Drawing.Point(0, 0);
             this.metroTabControl1.Name = "metroTabControl1";
-            this.metroTabControl1.Padding = new System.Drawing.Point(6, 8);
+            this.metroTabControl1.Size = new System.Drawing.Size(200, 100);
+            this.metroTabControl1.Style = MetroFramework.MetroColorStyle.Blue;
+            this.metroTabControl1.StyleManager = null;
             this.metroTabControl1.TabIndex = 0;
-            this.metroTabControl1.UseSelectable = true;
-            // 
-            // metroToolTip1
-            // 
-            this.metroToolTip1.Style = MetroFramework.MetroColorStyle.Blue;
-            this.metroToolTip1.StyleManager = null;
-            this.metroToolTip1.Theme = MetroFramework.MetroThemeStyle.Light;
-            // 
-            // metroToolTip2
-            // 
-            this.metroToolTip2.Style = MetroFramework.MetroColorStyle.Blue;
-            this.metroToolTip2.StyleManager = null;
-            this.metroToolTip2.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroTabControl1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.metroTabControl1.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroTabControl1.UseStyleColors = false;
             // 
             // metroToggle1
             // 
             this.metroToggle1.AutoSize = true;
+            this.metroToggle1.CustomBackground = false;
+            this.metroToggle1.DisplayStatus = true;
+            this.metroToggle1.FontSize = MetroFramework.MetroLinkSize.Small;
+            this.metroToggle1.FontWeight = MetroFramework.MetroLinkWeight.Regular;
             this.metroToggle1.Location = new System.Drawing.Point(0, 0);
-            this.metroToggle1.Name = "MetroToggle";
+            this.metroToggle1.Name = "metroToggle1";
+            this.metroToggle1.Size = new System.Drawing.Size(104, 24);
+            this.metroToggle1.Style = MetroFramework.MetroColorStyle.Blue;
+            this.metroToggle1.StyleManager = null;
             this.metroToggle1.TabIndex = 0;
             this.metroToggle1.Text = "Off";
-            this.metroToggle1.UseSelectable = true;
+            this.metroToggle1.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroToggle1.UseStyleColors = false;
             // 
             // metroTabControl2
             // 
+            this.metroTabControl2.CustomBackground = false;
+            this.metroTabControl2.FontSize = MetroFramework.MetroTabControlSize.Medium;
+            this.metroTabControl2.FontWeight = MetroFramework.MetroTabControlWeight.Light;
             this.metroTabControl2.ItemSize = new System.Drawing.Size(131, 36);
             this.metroTabControl2.Location = new System.Drawing.Point(0, 0);
             this.metroTabControl2.Name = "metroTabControl2";
-            this.metroTabControl2.Padding = new System.Drawing.Point(6, 8);
+            this.metroTabControl2.Size = new System.Drawing.Size(200, 100);
+            this.metroTabControl2.Style = MetroFramework.MetroColorStyle.Blue;
+            this.metroTabControl2.StyleManager = null;
             this.metroTabControl2.TabIndex = 0;
-            this.metroTabControl2.UseSelectable = true;
+            this.metroTabControl2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.metroTabControl2.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroTabControl2.UseStyleColors = false;
+            // 
+            // metroLink1
+            // 
+            metroLink1.CustomBackground = false;
+            metroLink1.FontSize = MetroFramework.MetroLinkSize.Small;
+            metroLink1.FontWeight = MetroFramework.MetroLinkWeight.Bold;
+            metroLink1.Location = new System.Drawing.Point(0, 653);
+            metroLink1.Name = "metroLink1";
+            metroLink1.Size = new System.Drawing.Size(625, 23);
+            metroLink1.Style = MetroFramework.MetroColorStyle.Blue;
+            metroLink1.StyleManager = this.metroStyleManager;
+            metroLink1.TabIndex = 4;
+            metroLink1.Text = "项目设计：许程远 西北工业大学";
+            metroLink1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            metroLink1.Theme = MetroFramework.MetroThemeStyle.Light;
+            metroLink1.UseStyleColors = true;
+            metroLink1.Click += new System.EventHandler(this.metroLink1_Click);
+            // 
+            // 系部信息Tile
+            // 
+            this.系部信息Tile.ActiveControl = null;
+            this.系部信息Tile.Location = new System.Drawing.Point(78, 154);
+            this.系部信息Tile.Name = "系部信息Tile";
+            this.系部信息Tile.Size = new System.Drawing.Size(128, 128);
+            this.系部信息Tile.Style = MetroFramework.MetroColorStyle.Blue;
+            this.系部信息Tile.StyleManager = this.metroStyleManager;
+            this.系部信息Tile.TabIndex = 5;
+            this.系部信息Tile.TabStop = false;
+            this.系部信息Tile.Text = "系部信息";
+            this.系部信息Tile.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.系部信息Tile.TileCount = 0;
+            this.系部信息Tile.Click += new System.EventHandler(this.metroTile1_Click);
+            // 
+            // 班级信息Tile
+            // 
+            this.班级信息Tile.ActiveControl = null;
+            this.班级信息Tile.Location = new System.Drawing.Point(230, 154);
+            this.班级信息Tile.Name = "班级信息Tile";
+            this.班级信息Tile.Size = new System.Drawing.Size(128, 128);
+            this.班级信息Tile.Style = MetroFramework.MetroColorStyle.Blue;
+            this.班级信息Tile.StyleManager = this.metroStyleManager;
+            this.班级信息Tile.TabIndex = 6;
+            this.班级信息Tile.Text = "班级信息";
+            this.班级信息Tile.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.班级信息Tile.TileCount = 0;
+            this.班级信息Tile.Click += new System.EventHandler(this.metroTile2_Click);
+            // 
+            // 学生信息Tile
+            // 
+            this.学生信息Tile.ActiveControl = null;
+            this.学生信息Tile.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.学生信息Tile.Location = new System.Drawing.Point(382, 154);
+            this.学生信息Tile.Name = "学生信息Tile";
+            this.学生信息Tile.Size = new System.Drawing.Size(128, 128);
+            this.学生信息Tile.Style = MetroFramework.MetroColorStyle.Blue;
+            this.学生信息Tile.StyleManager = this.metroStyleManager;
+            this.学生信息Tile.TabIndex = 7;
+            this.学生信息Tile.Text = "学生信息";
+            this.学生信息Tile.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.学生信息Tile.TileCount = 0;
+            this.学生信息Tile.Click += new System.EventHandler(this.metroTile3_Click);
+            // 
+            // 课程信息Tile
+            // 
+            this.课程信息Tile.ActiveControl = null;
+            this.课程信息Tile.Location = new System.Drawing.Point(542, 154);
+            this.课程信息Tile.Name = "课程信息Tile";
+            this.课程信息Tile.Size = new System.Drawing.Size(128, 128);
+            this.课程信息Tile.Style = MetroFramework.MetroColorStyle.Blue;
+            this.课程信息Tile.StyleManager = this.metroStyleManager;
+            this.课程信息Tile.TabIndex = 8;
+            this.课程信息Tile.Text = "课程信息";
+            this.课程信息Tile.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.课程信息Tile.TileCount = 0;
+            this.课程信息Tile.Click += new System.EventHandler(this.metroTile4_Click);
+            // 
+            // 学生选课表Tile
+            // 
+            this.学生选课表Tile.ActiveControl = null;
+            this.学生选课表Tile.Location = new System.Drawing.Point(78, 304);
+            this.学生选课表Tile.Name = "学生选课表Tile";
+            this.学生选课表Tile.Size = new System.Drawing.Size(128, 128);
+            this.学生选课表Tile.Style = MetroFramework.MetroColorStyle.Blue;
+            this.学生选课表Tile.StyleManager = this.metroStyleManager;
+            this.学生选课表Tile.TabIndex = 9;
+            this.学生选课表Tile.Text = "学生选课表";
+            this.学生选课表Tile.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.学生选课表Tile.TileCount = 0;
+            // 
+            // LINQTile
+            // 
+            this.LINQTile.ActiveControl = null;
+            this.LINQTile.Location = new System.Drawing.Point(230, 304);
+            this.LINQTile.Name = "LINQTile";
+            this.LINQTile.Size = new System.Drawing.Size(128, 128);
+            this.LINQTile.Style = MetroFramework.MetroColorStyle.Blue;
+            this.LINQTile.StyleManager = this.metroStyleManager;
+            this.LINQTile.TabIndex = 10;
+            this.LINQTile.Text = "LINQ";
+            this.LINQTile.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.LINQTile.TileCount = 0;
+            // 
+            // 关于Tile
+            // 
+            this.关于Tile.ActiveControl = null;
+            this.关于Tile.Location = new System.Drawing.Point(382, 457);
+            this.关于Tile.Name = "关于Tile";
+            this.关于Tile.Size = new System.Drawing.Size(128, 128);
+            this.关于Tile.Style = MetroFramework.MetroColorStyle.Blue;
+            this.关于Tile.StyleManager = this.metroStyleManager;
+            this.关于Tile.TabIndex = 11;
+            this.关于Tile.Text = "关于";
+            this.关于Tile.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.关于Tile.TileCount = 0;
+            this.关于Tile.Click += new System.EventHandler(this.metroTile7_Click);
+            // 
+            // 退出Tile
+            // 
+            this.退出Tile.ActiveControl = null;
+            this.退出Tile.Location = new System.Drawing.Point(542, 457);
+            this.退出Tile.Name = "退出Tile";
+            this.退出Tile.Size = new System.Drawing.Size(128, 128);
+            this.退出Tile.Style = MetroFramework.MetroColorStyle.Blue;
+            this.退出Tile.StyleManager = this.metroStyleManager;
+            this.退出Tile.TabIndex = 12;
+            this.退出Tile.Text = "退出";
+            this.退出Tile.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.退出Tile.TileCount = 0;
+            this.退出Tile.Click += new System.EventHandler(this.metroTile8_Click);
+            // 
+            // metroTile1
+            // 
+            this.metroTile1.ActiveControl = null;
+            this.metroTile1.Location = new System.Drawing.Point(78, 457);
+            this.metroTile1.Name = "metroTile1";
+            this.metroTile1.Size = new System.Drawing.Size(128, 128);
+            this.metroTile1.Style = MetroFramework.MetroColorStyle.Blue;
+            this.metroTile1.StyleManager = this.metroStyleManager;
+            this.metroTile1.TabIndex = 13;
+            this.metroTile1.Text = "界面主题";
+            this.metroTile1.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroTile1.TileCount = 0;
+            this.metroTile1.Click += new System.EventHandler(this.metroTile1_Click_1);
+            // 
+            // metroStyleManager
+            // 
+            this.metroStyleManager.OwnerForm = this;
+            this.metroStyleManager.Style = MetroFramework.MetroColorStyle.Blue;
+            this.metroStyleManager.Theme = MetroFramework.MetroThemeStyle.Light;
+            // 
+            // metroTile2
+            // 
+            this.metroTile2.ActiveControl = null;
+            this.metroTile2.Location = new System.Drawing.Point(542, 304);
+            this.metroTile2.Name = "metroTile2";
+            this.metroTile2.Size = new System.Drawing.Size(128, 128);
+            this.metroTile2.Style = MetroFramework.MetroColorStyle.Blue;
+            this.metroTile2.StyleManager = this.metroStyleManager;
+            this.metroTile2.TabIndex = 14;
+            this.metroTile2.Text = "界面风格";
+            this.metroTile2.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroTile2.TileCount = 0;
+            this.metroTile2.Click += new System.EventHandler(this.metroTile2_Click_1);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(865, 472);
-            this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.menuStrip1);
-            this.IsMdiContainer = true;
-            this.MainMenuStrip = this.menuStrip1;
+            this.ClientSize = new System.Drawing.Size(794, 681);
+            this.Controls.Add(this.metroTile2);
+            this.Controls.Add(this.metroTile1);
+            this.Controls.Add(this.退出Tile);
+            this.Controls.Add(this.关于Tile);
+            this.Controls.Add(this.LINQTile);
+            this.Controls.Add(this.学生选课表Tile);
+            this.Controls.Add(this.课程信息Tile);
+            this.Controls.Add(this.学生信息Tile);
+            this.Controls.Add(this.班级信息Tile);
+            this.Controls.Add(this.系部信息Tile);
+            this.Controls.Add(metroLink1);
+            this.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Location = new System.Drawing.Point(0, 0);
             this.Name = "frmMain";
+            this.StyleManager = this.metroStyleManager;
             this.Text = "学生学籍管理系统";
-            this.TransparencyKey = System.Drawing.Color.Empty;
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.Resize += new System.EventHandler(this.frnMain_Resize);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem 系部信息ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 班级信息ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 学生信息ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 课程信息ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 学生选课表ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem lINQ示例ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 系统ToolStripMenuItem;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton 退出;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.ToolStripStatusLabel LoginInfo;
-        private System.Windows.Forms.ToolStripMenuItem 关于ToolStripMenuItem;
+        //private MetroFramework.Components.MetroStyleManager metroStyleManager;
         private MetroFramework.Controls.MetroTabControl metroTabControl1;
-        private MetroFramework.Components.MetroToolTip metroToolTip1;
-        private MetroFramework.Components.MetroToolTip metroToolTip2;
         private MetroFramework.Controls.MetroToggle metroToggle1;
         private MetroFramework.Controls.MetroTabControl metroTabControl2;
+        private MetroFramework.Controls.MetroTile 系部信息Tile;
+        private MetroFramework.Controls.MetroTile 班级信息Tile;
+        private MetroFramework.Controls.MetroTile 学生信息Tile;
+        private MetroFramework.Controls.MetroTile 课程信息Tile;
+        private MetroFramework.Controls.MetroTile 学生选课表Tile;
+        private MetroFramework.Controls.MetroTile LINQTile;
+        private MetroFramework.Controls.MetroTile 关于Tile;
+        private MetroFramework.Controls.MetroTile 退出Tile;
+        private MetroFramework.Controls.MetroTile metroTile1;
+        private MetroFramework.Components.MetroStyleManager metroStyleManager;
+        private MetroFramework.Controls.MetroTile metroTile2;
     }
 }
 

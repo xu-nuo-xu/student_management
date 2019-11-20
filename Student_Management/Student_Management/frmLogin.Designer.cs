@@ -28,22 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLogin));
             this.lblID = new System.Windows.Forms.Label();
             this.lblPwd = new System.Windows.Forms.Label();
-            this.txtID = new System.Windows.Forms.TextBox();
-            this.txtPwd = new System.Windows.Forms.TextBox();
-            this.btnLogin = new System.Windows.Forms.Button();
-            this.btnExit = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.cbIsManager = new System.Windows.Forms.CheckBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.metroProgressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
+            this.metroProgressBar1 = new MetroFramework.Controls.MetroProgressBar();
+            this.metroButton1 = new MetroFramework.Controls.MetroButton();
+            this.metroButton2 = new MetroFramework.Controls.MetroButton();
+            this.txtID = new MetroFramework.Controls.MetroTextBox();
+            this.txtPwd = new MetroFramework.Controls.MetroTextBox();
             this.SuspendLayout();
             // 
             // lblID
             // 
             this.lblID.AutoSize = true;
-            this.lblID.Location = new System.Drawing.Point(121, 75);
+            this.lblID.Location = new System.Drawing.Point(89, 79);
             this.lblID.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblID.Name = "lblID";
             this.lblID.Size = new System.Drawing.Size(112, 15);
@@ -53,75 +52,19 @@
             // lblPwd
             // 
             this.lblPwd.AutoSize = true;
-            this.lblPwd.Location = new System.Drawing.Point(121, 129);
+            this.lblPwd.Location = new System.Drawing.Point(104, 122);
             this.lblPwd.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPwd.Name = "lblPwd";
             this.lblPwd.Size = new System.Drawing.Size(97, 15);
             this.lblPwd.TabIndex = 1;
             this.lblPwd.Text = "请输入密码：";
             // 
-            // txtID
-            // 
-            this.txtID.Location = new System.Drawing.Point(249, 71);
-            this.txtID.Margin = new System.Windows.Forms.Padding(4);
-            this.txtID.Name = "txtID";
-            this.txtID.Size = new System.Drawing.Size(132, 25);
-            this.txtID.TabIndex = 2;
-            this.txtID.Text = "001";
-            // 
-            // txtPwd
-            // 
-            this.txtPwd.Location = new System.Drawing.Point(249, 125);
-            this.txtPwd.Margin = new System.Windows.Forms.Padding(4);
-            this.txtPwd.Name = "txtPwd";
-            this.txtPwd.PasswordChar = '*';
-            this.txtPwd.Size = new System.Drawing.Size(132, 25);
-            this.txtPwd.TabIndex = 3;
-            this.txtPwd.Text = "123";
-            // 
-            // btnLogin
-            // 
-            this.btnLogin.Image = ((System.Drawing.Image)(resources.GetObject("btnLogin.Image")));
-            this.btnLogin.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLogin.Location = new System.Drawing.Point(124, 228);
-            this.btnLogin.Margin = new System.Windows.Forms.Padding(4);
-            this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(100, 29);
-            this.btnLogin.TabIndex = 4;
-            this.btnLogin.Text = "登录";
-            this.btnLogin.UseVisualStyleBackColor = true;
-            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
-            // 
-            // btnExit
-            // 
-            this.btnExit.Image = ((System.Drawing.Image)(resources.GetObject("btnExit.Image")));
-            this.btnExit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExit.Location = new System.Drawing.Point(283, 228);
-            this.btnExit.Margin = new System.Windows.Forms.Padding(4);
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(100, 29);
-            this.btnExit.TabIndex = 5;
-            this.btnExit.Text = "退出";
-            this.btnExit.UseVisualStyleBackColor = true;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(53, 46);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(29, 25);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox1.TabIndex = 6;
-            this.pictureBox1.TabStop = false;
-            // 
             // cbIsManager
             // 
             this.cbIsManager.AutoSize = true;
             this.cbIsManager.Checked = true;
             this.cbIsManager.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbIsManager.Location = new System.Drawing.Point(249, 181);
+            this.cbIsManager.Location = new System.Drawing.Point(193, 177);
             this.cbIsManager.Margin = new System.Windows.Forms.Padding(4);
             this.cbIsManager.Name = "cbIsManager";
             this.cbIsManager.Size = new System.Drawing.Size(74, 19);
@@ -129,28 +72,115 @@
             this.cbIsManager.Text = "管理员";
             this.cbIsManager.UseVisualStyleBackColor = true;
             // 
+            // metroProgressSpinner1
+            // 
+            this.metroProgressSpinner1.CustomBackground = false;
+            this.metroProgressSpinner1.Location = new System.Drawing.Point(23, 91);
+            this.metroProgressSpinner1.Maximum = 100;
+            this.metroProgressSpinner1.Name = "metroProgressSpinner1";
+            this.metroProgressSpinner1.Size = new System.Drawing.Size(51, 53);
+            this.metroProgressSpinner1.Style = MetroFramework.MetroColorStyle.Blue;
+            this.metroProgressSpinner1.StyleManager = null;
+            this.metroProgressSpinner1.TabIndex = 8;
+            this.metroProgressSpinner1.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroProgressSpinner1.Value = 50;
+            // 
+            // metroProgressBar1
+            // 
+            this.metroProgressBar1.FontSize = MetroFramework.MetroProgressBarSize.Medium;
+            this.metroProgressBar1.FontWeight = MetroFramework.MetroProgressBarWeight.Light;
+            this.metroProgressBar1.HideProgressText = true;
+            this.metroProgressBar1.Location = new System.Drawing.Point(-1, 247);
+            this.metroProgressBar1.Name = "metroProgressBar1";
+            this.metroProgressBar1.ProgressBarStyle = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.metroProgressBar1.Size = new System.Drawing.Size(458, 5);
+            this.metroProgressBar1.Style = MetroFramework.MetroColorStyle.Blue;
+            this.metroProgressBar1.StyleManager = null;
+            this.metroProgressBar1.TabIndex = 9;
+            this.metroProgressBar1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.metroProgressBar1.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroProgressBar1.Value = 30;
+            // 
+            // metroButton1
+            // 
+            this.metroButton1.Highlight = true;
+            this.metroButton1.Location = new System.Drawing.Point(56, 201);
+            this.metroButton1.Name = "metroButton1";
+            this.metroButton1.Size = new System.Drawing.Size(109, 30);
+            this.metroButton1.Style = MetroFramework.MetroColorStyle.Blue;
+            this.metroButton1.StyleManager = null;
+            this.metroButton1.TabIndex = 10;
+            this.metroButton1.Text = "登录";
+            this.metroButton1.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroButton1.Click += new System.EventHandler(this.metroButton1_Click);
+            // 
+            // metroButton2
+            // 
+            this.metroButton2.Highlight = true;
+            this.metroButton2.Location = new System.Drawing.Point(285, 201);
+            this.metroButton2.Name = "metroButton2";
+            this.metroButton2.Size = new System.Drawing.Size(107, 30);
+            this.metroButton2.Style = MetroFramework.MetroColorStyle.Blue;
+            this.metroButton2.StyleManager = null;
+            this.metroButton2.TabIndex = 11;
+            this.metroButton2.Text = "退出";
+            this.metroButton2.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroButton2.Click += new System.EventHandler(this.metroButton2_Click);
+            // 
+            // txtID
+            // 
+            this.txtID.FontSize = MetroFramework.MetroTextBoxSize.Small;
+            this.txtID.FontWeight = MetroFramework.MetroTextBoxWeight.Regular;
+            this.txtID.Location = new System.Drawing.Point(220, 79);
+            this.txtID.Multiline = false;
+            this.txtID.Name = "txtID";
+            this.txtID.SelectedText = "";
+            this.txtID.Size = new System.Drawing.Size(155, 25);
+            this.txtID.Style = MetroFramework.MetroColorStyle.Blue;
+            this.txtID.StyleManager = null;
+            this.txtID.TabIndex = 12;
+            this.txtID.Text = "001";
+            this.txtID.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.txtID.UseStyleColors = true;
+            // 
+            // txtPwd
+            // 
+            this.txtPwd.FontSize = MetroFramework.MetroTextBoxSize.Small;
+            this.txtPwd.FontWeight = MetroFramework.MetroTextBoxWeight.Regular;
+            this.txtPwd.Location = new System.Drawing.Point(220, 121);
+            this.txtPwd.Multiline = false;
+            this.txtPwd.Name = "txtPwd";
+            this.txtPwd.SelectedText = "";
+            this.txtPwd.Size = new System.Drawing.Size(155, 25);
+            this.txtPwd.Style = MetroFramework.MetroColorStyle.Blue;
+            this.txtPwd.StyleManager = null;
+            this.txtPwd.TabIndex = 13;
+            this.txtPwd.Text = "123";
+            this.txtPwd.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.txtPwd.UseStyleColors = true;
+            this.txtPwd.Click += new System.EventHandler(this.txtPwd_Click);
+            // 
             // frmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(489, 271);
-            this.Controls.Add(this.cbIsManager);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.btnExit);
-            this.Controls.Add(this.btnLogin);
+            this.ClientSize = new System.Drawing.Size(457, 271);
             this.Controls.Add(this.txtPwd);
             this.Controls.Add(this.txtID);
+            this.Controls.Add(this.metroButton2);
+            this.Controls.Add(this.metroButton1);
+            this.Controls.Add(this.metroProgressBar1);
+            this.Controls.Add(this.metroProgressSpinner1);
+            this.Controls.Add(this.cbIsManager);
             this.Controls.Add(this.lblPwd);
             this.Controls.Add(this.lblID);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Location = new System.Drawing.Point(0, 0);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmLogin";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "登录系统";
             this.Load += new System.EventHandler(this.frmLogin_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -160,11 +190,12 @@
 
         private System.Windows.Forms.Label lblID;
         private System.Windows.Forms.Label lblPwd;
-        private System.Windows.Forms.TextBox txtID;
-        private System.Windows.Forms.TextBox txtPwd;
-        private System.Windows.Forms.Button btnLogin;
-        private System.Windows.Forms.Button btnExit;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.CheckBox cbIsManager;
+        private MetroFramework.Controls.MetroProgressSpinner metroProgressSpinner1;
+        private MetroFramework.Controls.MetroProgressBar metroProgressBar1;
+        private MetroFramework.Controls.MetroButton metroButton1;
+        private MetroFramework.Controls.MetroButton metroButton2;
+        private MetroFramework.Controls.MetroTextBox txtID;
+        private MetroFramework.Controls.MetroTextBox txtPwd;
     }
 }

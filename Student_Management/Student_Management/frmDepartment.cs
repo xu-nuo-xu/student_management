@@ -109,5 +109,10 @@ namespace Student_Management
         {
 
         }
+
+        private void bindingNavigatorMovePreviousItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

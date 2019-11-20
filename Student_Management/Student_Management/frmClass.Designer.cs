@@ -412,6 +412,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.classDataGridView);
             this.Controls.Add(this.classBindingNavigator);
+            this.Location = new System.Drawing.Point(0, 0);
             this.Name = "frmClass";
             this.Text = "frmClass";
             this.Load += new System.EventHandler(this.frmClass_Load);
