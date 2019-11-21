@@ -42,11 +42,12 @@ namespace Student_Management
         private void ChangeEnabledState()
         {
             courseBindingNavigator.Enabled = !courseBindingNavigator.Enabled;
-            foreach(ToolStripItem b in tsControl.Items)
-            {
-                b.Enabled = !b.Enabled;
-            }
-            foreach(Control c in gbEdit.Controls)
+            toolStripButton1.Enabled = toolStripButton1.Enabled == true ? false : true;
+            toolStripButton2.Enabled = toolStripButton2.Enabled == true ? false : true;
+            toolStripButton3.Enabled = toolStripButton3.Enabled == true ? false : true;
+            toolStripButton4.Enabled = toolStripButton4.Enabled == true ? false : true;
+            toolStripButton5.Enabled = toolStripButton5.Enabled == true ? false : true;
+            foreach (Control c in gbEdit.Controls)
             {
                 if (c is TextBox)
                     ((TextBox)c).ReadOnly = !((TextBox)c).ReadOnly;
@@ -96,6 +97,46 @@ namespace Student_Management
         private void courseBindingNavigator_RefreshItems(object sender, EventArgs e)
         {
 
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            ChangeEnabledState();
+            courseBindingSource.AddNew();
+            couNoTextBox.Focus();
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            ChangeEnabledState();
+            couNoTextBox.Focus();
+        }
+
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            if (courseBindingSource.Current != null)
+            {
+                if (MessageBox.Show("确定删除吗？", "确定", MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    courseBindingSource.RemoveCurrent();
+                    this.tableAdapterManager.UpdateAll(this.student_Manage_DB);
+                }
+            }
+        }
+
+        private void toolStripButton_Click(object sender, EventArgs e)
+        {
+            ChangeEnabledState();
+            this.Validate();
+            this.courseBindingSource.EndEdit();
+            this.tableAdapterManager.UpdateAll(this.student_Manage_DB);
+        }
+
+        private void toolStripButton5_Click(object sender, EventArgs e)
+        {
+            ChangeEnabledState();
+            this.courseBindingSource.CancelEdit();
         }
     }
 }

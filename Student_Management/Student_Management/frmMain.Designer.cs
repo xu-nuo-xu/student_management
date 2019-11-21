@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             MetroFramework.Controls.MetroLink metroLink1;
+            this.metroStyleManager = new MetroFramework.Components.MetroStyleManager();
             this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
             this.metroToggle1 = new MetroFramework.Controls.MetroToggle();
             this.metroTabControl2 = new MetroFramework.Controls.MetroTabControl();
@@ -41,10 +42,32 @@
             this.关于Tile = new MetroFramework.Controls.MetroTile();
             this.退出Tile = new MetroFramework.Controls.MetroTile();
             this.metroTile1 = new MetroFramework.Controls.MetroTile();
-            this.metroStyleManager = new MetroFramework.Components.MetroStyleManager();
             this.metroTile2 = new MetroFramework.Controls.MetroTile();
             metroLink1 = new MetroFramework.Controls.MetroLink();
             this.SuspendLayout();
+            // 
+            // metroLink1
+            // 
+            metroLink1.CustomBackground = false;
+            metroLink1.FontSize = MetroFramework.MetroLinkSize.Small;
+            metroLink1.FontWeight = MetroFramework.MetroLinkWeight.Bold;
+            metroLink1.Location = new System.Drawing.Point(0, 653);
+            metroLink1.Name = "metroLink1";
+            metroLink1.Size = new System.Drawing.Size(625, 23);
+            metroLink1.Style = MetroFramework.MetroColorStyle.Blue;
+            metroLink1.StyleManager = this.metroStyleManager;
+            metroLink1.TabIndex = 4;
+            metroLink1.Text = "项目设计：许程远 西北工业大学";
+            metroLink1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            metroLink1.Theme = MetroFramework.MetroThemeStyle.Light;
+            metroLink1.UseStyleColors = true;
+            metroLink1.Click += new System.EventHandler(this.metroLink1_Click);
+            // 
+            // metroStyleManager
+            // 
+            this.metroStyleManager.OwnerForm = this;
+            this.metroStyleManager.Style = MetroFramework.MetroColorStyle.Blue;
+            this.metroStyleManager.Theme = MetroFramework.MetroThemeStyle.Light;
             // 
             // metroTabControl1
             // 
@@ -93,23 +116,6 @@
             this.metroTabControl2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.metroTabControl2.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroTabControl2.UseStyleColors = false;
-            // 
-            // metroLink1
-            // 
-            metroLink1.CustomBackground = false;
-            metroLink1.FontSize = MetroFramework.MetroLinkSize.Small;
-            metroLink1.FontWeight = MetroFramework.MetroLinkWeight.Bold;
-            metroLink1.Location = new System.Drawing.Point(0, 653);
-            metroLink1.Name = "metroLink1";
-            metroLink1.Size = new System.Drawing.Size(625, 23);
-            metroLink1.Style = MetroFramework.MetroColorStyle.Blue;
-            metroLink1.StyleManager = this.metroStyleManager;
-            metroLink1.TabIndex = 4;
-            metroLink1.Text = "项目设计：许程远 西北工业大学";
-            metroLink1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            metroLink1.Theme = MetroFramework.MetroThemeStyle.Light;
-            metroLink1.UseStyleColors = true;
-            metroLink1.Click += new System.EventHandler(this.metroLink1_Click);
             // 
             // 系部信息Tile
             // 
@@ -181,6 +187,7 @@
             this.学生选课表Tile.Text = "学生选课表";
             this.学生选课表Tile.Theme = MetroFramework.MetroThemeStyle.Light;
             this.学生选课表Tile.TileCount = 0;
+            this.学生选课表Tile.Click += new System.EventHandler(this.学生选课表Tile_Click);
             // 
             // LINQTile
             // 
@@ -194,6 +201,7 @@
             this.LINQTile.Text = "LINQ";
             this.LINQTile.Theme = MetroFramework.MetroThemeStyle.Light;
             this.LINQTile.TileCount = 0;
+            this.LINQTile.Click += new System.EventHandler(this.LINQTile_Click);
             // 
             // 关于Tile
             // 
@@ -237,12 +245,6 @@
             this.metroTile1.TileCount = 0;
             this.metroTile1.Click += new System.EventHandler(this.metroTile1_Click_1);
             // 
-            // metroStyleManager
-            // 
-            this.metroStyleManager.OwnerForm = this;
-            this.metroStyleManager.Style = MetroFramework.MetroColorStyle.Blue;
-            this.metroStyleManager.Theme = MetroFramework.MetroThemeStyle.Light;
-            // 
             // metroTile2
             // 
             this.metroTile2.ActiveControl = null;
@@ -277,6 +279,7 @@
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Location = new System.Drawing.Point(0, 0);
             this.Name = "frmMain";
+            this.Opacity = 0.8D;
             this.StyleManager = this.metroStyleManager;
             this.Text = "学生学籍管理系统";
             this.Load += new System.EventHandler(this.frmMain_Load);

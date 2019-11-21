@@ -78,7 +78,7 @@ namespace Student_Management
             if (CPublic.isManager)
             {
                 //LoginInfo.Text = "您好，" + CPublic.LoginInfo["UserName"] + "管理员，欢迎使用本系统！";
-                学生选课表Tile.Enabled = false;
+                //学生选课表Tile.Enabled = false;
                 this.Refresh();
             }
             else
@@ -88,7 +88,7 @@ namespace Student_Management
                 班级信息Tile.Enabled = false;
                 学生信息Tile.Enabled = false;
                 课程信息Tile.Enabled = false;
-                LINQTile.Enabled = false;
+                //LINQTile.Enabled = false;
                 this.Refresh();
             }
         }
@@ -172,6 +172,20 @@ namespace Student_Management
             var m = new Random();
             int next = m.Next(0, 13);
             metroStyleManager.Style = (MetroColorStyle)next;
+        }
+
+        private void 学生选课表Tile_Click(object sender, EventArgs e)
+        {
+            frmStuCou f = new frmStuCou();
+            //f.MdiParent = this;
+            f.Show();
+            f.Focus();
+        }
+
+        private void LINQTile_Click(object sender, EventArgs e)
+        {
+            frmLinqToSql f = new frmLinqToSql();
+            f.Show();
         }
     }
 }

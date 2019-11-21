@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MetroFramework;
 using MetroFramework.Forms;
 
 namespace Student_Management
@@ -44,13 +45,15 @@ namespace Student_Management
         {
 
         }
+       
         private void ChangeEnabledState()
         {
             classBindingNavigator.Enabled = !classBindingNavigator.Enabled;
-            foreach (ToolStripItem b in tsControl.Items)
-            {
-                b.Enabled = !b.Enabled;
-            }
+            toolStripButton1.Enabled = toolStripButton1.Enabled == true ? false : true;
+            toolStripButton2.Enabled = toolStripButton2.Enabled == true ? false : true;
+            toolStripButton3.Enabled = toolStripButton3.Enabled == true ? false : true;
+            toolStripButton4.Enabled = toolStripButton4.Enabled == true ? false : true;
+            toolStripButton5.Enabled = toolStripButton5.Enabled == true ? false : true;
             foreach (Control c in gbEdit.Controls)
             {
                 if (c is TextBox)
@@ -100,6 +103,58 @@ namespace Student_Management
         private void classNoTextBox_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void toolStripButton11_Click(object sender, EventArgs e)
+        {
+            ChangeEnabledState();
+            classBindingSource.AddNew();
+            classNoTextBox.Focus();
+        }
+
+        private void metroTile1_Click(object sender, EventArgs e)
+        {
+            ChangeEnabledState();
+            classNoTextBox.Focus();
+        }
+
+        private void metroTile2_Click(object sender, EventArgs e)
+        {
+            if (classBindingSource.Current != null)
+            {
+                if (MessageBox.Show("确定删除吗？", "确定", MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    classBindingSource.RemoveCurrent();
+                    this.tableAdapterManager.UpdateAll(this.student_Manage_DB);
+                }
+            }
+        }
+
+        private void metroTile3_Click(object sender, EventArgs e)
+        {
+            ChangeEnabledState();
+            this.Validate();
+            this.classBindingSource.EndEdit();
+            this.tableAdapterManager.UpdateAll(this.student_Manage_DB);
+        }
+
+        private void metroTile4_Click(object sender, EventArgs e)
+        {
+            ChangeEnabledState();
+            this.classBindingSource.CancelEdit();
+        }
+
+        private void metroTile2_Click_1(object sender, EventArgs e)
+        {
+            metroStyleManager.Theme = metroStyleManager.Theme == MetroThemeStyle.Light ? MetroThemeStyle.Dark : MetroThemeStyle.Light;
+        }
+
+        private void metroTile1_Click_1(object sender, EventArgs e)
+        {
+            var m = new Random();
+            int next = m.Next(0, 13);
+            metroStyleManager.Style = (MetroColorStyle)next;
         }
     }
 }

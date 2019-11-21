@@ -17,6 +17,7 @@ namespace Student_Management
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmLogin());
+            
             //Application.Run(new frmLoginWithControl());
             if (CPublic.LoginInfo != null)
             Application.Run(new frmMain());

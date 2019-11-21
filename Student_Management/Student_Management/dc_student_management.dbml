@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Student_Management" Class="dc_student_managementDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=LAPTOP-9M9JM6PU\SQLEXPRESS;Initial Catalog=Student_Management;Integrated Security=True" SettingsObjectName="Student_Management.Properties.Settings" SettingsPropertyName="Student_ManagementConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Student" Member="Student">
+    <Type Name="Student">
+      <Column Name="StuNo" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ClassNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="StuName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Sex" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="BirthDay" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Pwd" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Student_StuCou" Member="StuCou" ThisKey="StuNo" OtherKey="StuNo" Type="StuCou" />
+    </Type>
+  </Table>
+  <Table Name="dbo.StuCou" Member="StuCou">
+    <Type Name="StuCou">
+      <Column Name="StuNo" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CouNo" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Grade" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Student_StuCou" Member="Student" ThisKey="StuNo" OtherKey="StuNo" Type="Student" IsForeignKey="true" />
+      <Association Name="Course_StuCou" Member="Course" ThisKey="CouNo" OtherKey="CouNo" Type="Course" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Course" Member="Course">
+    <Type Name="Course">
+      <Column Name="CouNo" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CouName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Credit" Type="System.Single" DbType="Real NOT NULL" CanBeNull="false" />
+      <Association Name="Course_StuCou" Member="StuCou" ThisKey="CouNo" OtherKey="CouNo" Type="StuCou" />
+    </Type>
+  </Table>
+</Database>

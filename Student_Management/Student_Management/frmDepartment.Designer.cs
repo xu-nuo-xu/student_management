@@ -36,11 +36,20 @@
             this.departmentBindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
             this.departmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.student_Manage_DB = new Student_Management.Student_Manage_DB();
+            this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
+            this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
+            this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tableAdapterManager = new Student_Management.Student_Manage_DBTableAdapters.TableAdapterManager();
             this.departmentTableAdapter = new Student_Management.Student_Manage_DBTableAdapters.DepartmentTableAdapter();
             this.tsControl = new System.Windows.Forms.ToolStrip();
+            this.tsbInsert = new System.Windows.Forms.ToolStripButton();
+            this.tsbEdit = new System.Windows.Forms.ToolStripButton();
+            this.tsbDelete = new System.Windows.Forms.ToolStripButton();
+            this.tsbSave = new System.Windows.Forms.ToolStripButton();
+            this.tsbCancel = new System.Windows.Forms.ToolStripButton();
             this.courseBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.courseTableAdapter = new Student_Management.Student_Manage_DBTableAdapters.CourseTableAdapter();
             this.departNameTextBox = new System.Windows.Forms.TextBox();
@@ -52,15 +61,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.metroCheckBox1 = new MetroFramework.Controls.MetroCheckBox();
             this.metroButton1 = new MetroFramework.Controls.MetroButton();
-            this.tsbInsert = new System.Windows.Forms.ToolStripButton();
-            this.tsbEdit = new System.Windows.Forms.ToolStripButton();
-            this.tsbDelete = new System.Windows.Forms.ToolStripButton();
-            this.tsbSave = new System.Windows.Forms.ToolStripButton();
-            this.tsbCancel = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
             departNameLabel = new System.Windows.Forms.Label();
             departNoLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.departmentBindingNavigator)).BeginInit();
@@ -129,10 +129,47 @@
             this.student_Manage_DB.DataSetName = "Student_Manage_DB";
             this.student_Manage_DB.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
+            // bindingNavigatorMoveFirstItem
+            // 
+            this.bindingNavigatorMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bindingNavigatorMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveFirstItem.Image")));
+            this.bindingNavigatorMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
+            this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
+            this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(24, 24);
+            this.bindingNavigatorMoveFirstItem.Text = "移到第一条记录";
+            // 
+            // bindingNavigatorMovePreviousItem
+            // 
+            this.bindingNavigatorMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bindingNavigatorMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMovePreviousItem.Image")));
+            this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
+            this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
+            this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(24, 24);
+            this.bindingNavigatorMovePreviousItem.Text = "移到上一条记录";
+            this.bindingNavigatorMovePreviousItem.Click += new System.EventHandler(this.bindingNavigatorMovePreviousItem_Click);
+            // 
             // bindingNavigatorSeparator
             // 
             this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
             this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 27);
+            // 
+            // bindingNavigatorMoveNextItem
+            // 
+            this.bindingNavigatorMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bindingNavigatorMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveNextItem.Image")));
+            this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
+            this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
+            this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(24, 24);
+            this.bindingNavigatorMoveNextItem.Text = "移到下一条记录";
+            // 
+            // bindingNavigatorMoveLastItem
+            // 
+            this.bindingNavigatorMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bindingNavigatorMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem.Image")));
+            this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
+            this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
+            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(24, 24);
+            this.bindingNavigatorMoveLastItem.Text = "移到最后一条记录";
             // 
             // bindingNavigatorSeparator2
             // 
@@ -168,6 +205,54 @@
             this.tsControl.Size = new System.Drawing.Size(1112, 27);
             this.tsControl.TabIndex = 2;
             this.tsControl.Text = "toolStrip1";
+            // 
+            // tsbInsert
+            // 
+            this.tsbInsert.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.tsbInsert.Image = ((System.Drawing.Image)(resources.GetObject("tsbInsert.Image")));
+            this.tsbInsert.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbInsert.Name = "tsbInsert";
+            this.tsbInsert.Size = new System.Drawing.Size(63, 24);
+            this.tsbInsert.Text = "新增";
+            this.tsbInsert.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // tsbEdit
+            // 
+            this.tsbEdit.Image = ((System.Drawing.Image)(resources.GetObject("tsbEdit.Image")));
+            this.tsbEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbEdit.Name = "tsbEdit";
+            this.tsbEdit.Size = new System.Drawing.Size(63, 24);
+            this.tsbEdit.Text = "修改";
+            this.tsbEdit.Click += new System.EventHandler(this.toolStripButton2_Click);
+            // 
+            // tsbDelete
+            // 
+            this.tsbDelete.Image = ((System.Drawing.Image)(resources.GetObject("tsbDelete.Image")));
+            this.tsbDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbDelete.Name = "tsbDelete";
+            this.tsbDelete.Size = new System.Drawing.Size(63, 24);
+            this.tsbDelete.Text = "删除";
+            this.tsbDelete.Click += new System.EventHandler(this.tsbDelete_Click_1);
+            // 
+            // tsbSave
+            // 
+            this.tsbSave.Enabled = false;
+            this.tsbSave.Image = ((System.Drawing.Image)(resources.GetObject("tsbSave.Image")));
+            this.tsbSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbSave.Name = "tsbSave";
+            this.tsbSave.Size = new System.Drawing.Size(63, 24);
+            this.tsbSave.Text = "保存";
+            this.tsbSave.Click += new System.EventHandler(this.tsbSave_Click_1);
+            // 
+            // tsbCancel
+            // 
+            this.tsbCancel.Enabled = false;
+            this.tsbCancel.Image = ((System.Drawing.Image)(resources.GetObject("tsbCancel.Image")));
+            this.tsbCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCancel.Name = "tsbCancel";
+            this.tsbCancel.Size = new System.Drawing.Size(63, 24);
+            this.tsbCancel.Text = "放弃";
+            this.tsbCancel.Click += new System.EventHandler(this.tsbCancel_Click_1);
             // 
             // courseBindingSource
             // 
@@ -273,91 +358,6 @@
             this.metroButton1.TabIndex = 0;
             this.metroButton1.Theme = MetroFramework.MetroThemeStyle.Light;
             // 
-            // tsbInsert
-            // 
-            this.tsbInsert.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.tsbInsert.Image = ((System.Drawing.Image)(resources.GetObject("tsbInsert.Image")));
-            this.tsbInsert.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbInsert.Name = "tsbInsert";
-            this.tsbInsert.Size = new System.Drawing.Size(63, 24);
-            this.tsbInsert.Text = "新增";
-            this.tsbInsert.Click += new System.EventHandler(this.toolStripButton1_Click);
-            // 
-            // tsbEdit
-            // 
-            this.tsbEdit.Image = ((System.Drawing.Image)(resources.GetObject("tsbEdit.Image")));
-            this.tsbEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbEdit.Name = "tsbEdit";
-            this.tsbEdit.Size = new System.Drawing.Size(63, 24);
-            this.tsbEdit.Text = "修改";
-            this.tsbEdit.Click += new System.EventHandler(this.toolStripButton2_Click);
-            // 
-            // tsbDelete
-            // 
-            this.tsbDelete.Image = ((System.Drawing.Image)(resources.GetObject("tsbDelete.Image")));
-            this.tsbDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbDelete.Name = "tsbDelete";
-            this.tsbDelete.Size = new System.Drawing.Size(63, 24);
-            this.tsbDelete.Text = "删除";
-            this.tsbDelete.Click += new System.EventHandler(this.tsbDelete_Click_1);
-            // 
-            // tsbSave
-            // 
-            this.tsbSave.Enabled = false;
-            this.tsbSave.Image = ((System.Drawing.Image)(resources.GetObject("tsbSave.Image")));
-            this.tsbSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbSave.Name = "tsbSave";
-            this.tsbSave.Size = new System.Drawing.Size(63, 24);
-            this.tsbSave.Text = "保存";
-            this.tsbSave.Click += new System.EventHandler(this.tsbSave_Click_1);
-            // 
-            // tsbCancel
-            // 
-            this.tsbCancel.Enabled = false;
-            this.tsbCancel.Image = ((System.Drawing.Image)(resources.GetObject("tsbCancel.Image")));
-            this.tsbCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbCancel.Name = "tsbCancel";
-            this.tsbCancel.Size = new System.Drawing.Size(63, 24);
-            this.tsbCancel.Text = "放弃";
-            this.tsbCancel.Click += new System.EventHandler(this.tsbCancel_Click_1);
-            // 
-            // bindingNavigatorMoveFirstItem
-            // 
-            this.bindingNavigatorMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveFirstItem.Image")));
-            this.bindingNavigatorMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
-            this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(24, 24);
-            this.bindingNavigatorMoveFirstItem.Text = "移到第一条记录";
-            // 
-            // bindingNavigatorMovePreviousItem
-            // 
-            this.bindingNavigatorMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMovePreviousItem.Image")));
-            this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
-            this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(24, 24);
-            this.bindingNavigatorMovePreviousItem.Text = "移到上一条记录";
-            this.bindingNavigatorMovePreviousItem.Click += new System.EventHandler(this.bindingNavigatorMovePreviousItem_Click);
-            // 
-            // bindingNavigatorMoveNextItem
-            // 
-            this.bindingNavigatorMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveNextItem.Image")));
-            this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
-            this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(24, 24);
-            this.bindingNavigatorMoveNextItem.Text = "移到下一条记录";
-            // 
-            // bindingNavigatorMoveLastItem
-            // 
-            this.bindingNavigatorMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem.Image")));
-            this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
-            this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(24, 24);
-            this.bindingNavigatorMoveLastItem.Text = "移到最后一条记录";
-            // 
             // frmDepartment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -370,6 +370,7 @@
             this.Controls.Add(this.departmentBindingNavigator);
             this.Location = new System.Drawing.Point(0, 0);
             this.Name = "frmDepartment";
+            this.Opacity = 0.8D;
             this.Text = "系部信息";
             this.Load += new System.EventHandler(this.frmDepartment_Load);
             ((System.ComponentModel.ISupportInitialize)(this.departmentBindingNavigator)).EndInit();

@@ -62,8 +62,6 @@
             // cbIsManager
             // 
             this.cbIsManager.AutoSize = true;
-            this.cbIsManager.Checked = true;
-            this.cbIsManager.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbIsManager.Location = new System.Drawing.Point(193, 177);
             this.cbIsManager.Margin = new System.Windows.Forms.Padding(4);
             this.cbIsManager.Name = "cbIsManager";
@@ -90,10 +88,10 @@
             this.metroProgressBar1.FontSize = MetroFramework.MetroProgressBarSize.Medium;
             this.metroProgressBar1.FontWeight = MetroFramework.MetroProgressBarWeight.Light;
             this.metroProgressBar1.HideProgressText = true;
-            this.metroProgressBar1.Location = new System.Drawing.Point(-1, 247);
+            this.metroProgressBar1.Location = new System.Drawing.Point(-1, 248);
             this.metroProgressBar1.Name = "metroProgressBar1";
             this.metroProgressBar1.ProgressBarStyle = System.Windows.Forms.ProgressBarStyle.Marquee;
-            this.metroProgressBar1.Size = new System.Drawing.Size(458, 5);
+            this.metroProgressBar1.Size = new System.Drawing.Size(459, 5);
             this.metroProgressBar1.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroProgressBar1.StyleManager = null;
             this.metroProgressBar1.TabIndex = 9;
@@ -139,7 +137,7 @@
             this.txtID.Style = MetroFramework.MetroColorStyle.Blue;
             this.txtID.StyleManager = null;
             this.txtID.TabIndex = 12;
-            this.txtID.Text = "001";
+            this.txtID.Text = "2017302430";
             this.txtID.Theme = MetroFramework.MetroThemeStyle.Light;
             this.txtID.UseStyleColors = true;
             // 
@@ -155,7 +153,7 @@
             this.txtPwd.Style = MetroFramework.MetroColorStyle.Blue;
             this.txtPwd.StyleManager = null;
             this.txtPwd.TabIndex = 13;
-            this.txtPwd.Text = "123";
+            this.txtPwd.Text = "990130";
             this.txtPwd.Theme = MetroFramework.MetroThemeStyle.Light;
             this.txtPwd.UseStyleColors = true;
             this.txtPwd.Click += new System.EventHandler(this.txtPwd_Click);
@@ -164,7 +162,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(457, 271);
+            this.ClientSize = new System.Drawing.Size(458, 286);
             this.Controls.Add(this.txtPwd);
             this.Controls.Add(this.txtID);
             this.Controls.Add(this.metroButton2);
@@ -179,6 +177,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmLogin";
+            this.Opacity = 0.8D;
             this.Text = "登录系统";
             this.Load += new System.EventHandler(this.frmLogin_Load);
             this.ResumeLayout(false);
@@ -195,7 +194,7 @@
         private MetroFramework.Controls.MetroProgressBar metroProgressBar1;
         private MetroFramework.Controls.MetroButton metroButton1;
         private MetroFramework.Controls.MetroButton metroButton2;
-        private MetroFramework.Controls.MetroTextBox txtID;
-        private MetroFramework.Controls.MetroTextBox txtPwd;
+        public MetroFramework.Controls.MetroTextBox txtPwd;
+        public MetroFramework.Controls.MetroTextBox txtID;
     }
 }

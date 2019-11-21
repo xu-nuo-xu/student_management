@@ -510,7 +510,9 @@
             this.Controls.Add(this.gbEdit);
             this.Controls.Add(this.tsControl);
             this.Controls.Add(this.studentBindingNavigator);
+            this.Location = new System.Drawing.Point(0, 0);
             this.Name = "frmStudent";
+            this.Opacity = 0.8D;
             this.Text = "学生信息";
             this.Load += new System.EventHandler(this.frmStudent_Load);
             ((System.ComponentModel.ISupportInitialize)(this.student_Manage_DB)).EndInit();

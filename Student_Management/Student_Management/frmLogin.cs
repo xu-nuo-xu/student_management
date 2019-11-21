@@ -12,9 +12,13 @@ namespace Student_Management
 {
     public partial class frmLogin : MetroForm
     {
+        
+        public static frmLogin fm;
+        public static string ID;
         public frmLogin()
         {
             InitializeComponent();
+            fm = (frmLogin)this;
         }
 
       
@@ -29,7 +33,11 @@ namespace Student_Management
             if (CPublic.LoginInfo == null)
                 MessageBox.Show("密码错误！", "登录", MessageBoxButtons.OK, MessageBoxIcon.Information);
             else
+            {
+                ID = txtID.Text;
                 Close();
+            }
+                
 
         }
 
