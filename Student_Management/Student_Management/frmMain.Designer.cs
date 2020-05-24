@@ -198,7 +198,7 @@
             this.LINQTile.Style = MetroFramework.MetroColorStyle.Blue;
             this.LINQTile.StyleManager = this.metroStyleManager;
             this.LINQTile.TabIndex = 10;
-            this.LINQTile.Text = "LINQ";
+            this.LINQTile.Text = "查询信息";
             this.LINQTile.Theme = MetroFramework.MetroThemeStyle.Light;
             this.LINQTile.TileCount = 0;
             this.LINQTile.Click += new System.EventHandler(this.LINQTile_Click);

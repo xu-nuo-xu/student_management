@@ -91,5 +91,10 @@ namespace Student_Management
             ChangeEnabledState();
             this.stuCouBindingSource.CancelEdit();
         }
+
+        private void stuCouBindingNavigator_RefreshItems(object sender, EventArgs e)
+        {
+
+        }
     }
 }
