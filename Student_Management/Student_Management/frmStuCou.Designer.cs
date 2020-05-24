@@ -146,6 +146,7 @@
             this.stuCouBindingNavigator.Size = new System.Drawing.Size(883, 27);
             this.stuCouBindingNavigator.TabIndex = 0;
             this.stuCouBindingNavigator.Text = "bindingNavigator1";
+            this.stuCouBindingNavigator.RefreshItems += new System.EventHandler(this.stuCouBindingNavigator_RefreshItems);
             // 
             // bindingNavigatorMoveFirstItem
             // 

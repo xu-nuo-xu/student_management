@@ -78,7 +78,6 @@ namespace Student_Management
             if (CPublic.isManager)
             {
                 //LoginInfo.Text = "您好，" + CPublic.LoginInfo["UserName"] + "管理员，欢迎使用本系统！";
-                //学生选课表Tile.Enabled = false;
                 this.Refresh();
             }
             else
@@ -88,7 +87,6 @@ namespace Student_Management
                 班级信息Tile.Enabled = false;
                 学生信息Tile.Enabled = false;
                 课程信息Tile.Enabled = false;
-                //LINQTile.Enabled = false;
                 this.Refresh();
             }
         }

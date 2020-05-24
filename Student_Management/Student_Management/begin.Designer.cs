@@ -52,6 +52,7 @@
             this.Controls.Add(this.metroButton1);
             this.Name = "begin";
             this.Text = "begin";
+           // this.Load += new System.EventHandler(this.begin_Load);
             this.ResumeLayout(false);
 
         }
