@@ -6,23 +6,32 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "string.h"
+#include "lexical_anaylsis.h"
+#include "parse_analysis.h"
 using namespace std;
 /*****************************保留字表***********************************/
-static char reserveWord[12][20] = {
-	"program","var","begin","end","while","do","if","then","integer","reald","of","array"	//种别码：1-12
+static char reserveWord[13][20] = {
+	"program","var","begin","end","while","do","if","then","integer","reald","of","array","else"	//种别码：1-13
 };																							//种别码：13-20保留
 /*****************************界符运算符表*******************************/
-static char operatorOrDelimiter[32][10] = {													//种别码：21-42
+static char operatorOrDelimiter[33][10] = {													//种别码：21-43
 	"=","(",")","+","-","*","/",";",",","[","]",	//21-31
 	":",":=",">=",">","<","<=","<>",				//32-38
-	"and","not","or",'..'							//39-42									//其中32-42号可能无法由一个char来判断，我放后两行
+	"and","not","or","..","."						//39-43									//其中32-43号可能无法由一个char来判断，我放后两行
 };
-/******************************标识符表**,"[","]"	********************************/
+/******************************标识符表**********************************/
 static char IDentifierTb[1000][50] = { "" };												//种别码：98表示int，99表示实数，100表示标识符
+/******************************行号记录********************************/
+int row_num = 1;
+/***************************词法分析中的token识别记录*********************************/
+struct token result_token[1000] = { 0 };
+int result_count=0;
+/****************************语法分析中当前token指针***********************************/
+int parse_point = 0;
 /******************************查找保留字********************************/
 int searchReserve(char reserveWord[][20], char s[])
 {
-	for (int i = 0;i < 12;i++)
+	for (int i = 0;i < 13;i++)
 	{
 		if (strcmp(reserveWord[i], s) == 0)
 		{
@@ -52,7 +61,7 @@ bool IsDigit(char digit)
 /***********************编译预处理，取出无用字符和注释************/
 void filterResource(char r[], int pProject)
 {
-	char tempString[1000];	//程序最大10000个字符
+	char tempString[1000];	//程序最大1000个字符
 	int count = 0;
 	for (int i = 0;i < pProject;i++)
 	{
@@ -63,11 +72,12 @@ void filterResource(char r[], int pProject)
 				i++;
 			}
 		}
-		if (r[i] != '\n'&& r[i] != '\t'&& r[i] != '\r')//非无用字符加载到tempString中
+		if (r[i] != '\t'&& r[i] != '\r')//非无用字符加载到tempString中,\n换行符暂时不去除，为了记录错误行号所用
 		{
 			tempString[count++] = r[i];
 		}
 	}
+	tempString[count++] = '$';
 	tempString[count] = '\0';
 	strcpy(r, tempString);
 }
@@ -85,6 +95,11 @@ void Scanner(int &syn, char resourceProject[], char token[], int &pProject)	//�
 	for (i = 0;i < 30;i++);
 	{
 		token[i] = '\0';
+	}
+	while (ch == '\n')
+	{
+		row_num++;		//行号+1
+		ch = resourceProject[++pProject];	//向后移一位
 	}
 	if (IsLetter(resourceProject[pProject]))	//首字母为字母，则可能是保留字/标识符
 	{
@@ -117,7 +132,7 @@ void Scanner(int &syn, char resourceProject[], char token[], int &pProject)	//�
 			{
 				if (resourceProject[pProject + 1] == '.')	//连续两个'.'说明是数组下标
 				{
-					syn == 99;
+					syn = 99;
 					break;
 				}
 				else if (IsDigit(resourceProject[pProject + 1]) && is_real == 0)	//实数情况
@@ -125,13 +140,14 @@ void Scanner(int &syn, char resourceProject[], char token[], int &pProject)	//�
 					is_real = 1;
 					syn = 98;
 				}
+				else if (resourceProject[pProject] == '.' && is_real == 1)	//考虑2.25.28这种出错处理
+				{
+					printf("Error:Match dot two times in a same digit!   row_num : %d\n ", row_num);
+					exit(0);
+				}
 			}
 
-			else if (resourceProject[pProject] == '.' && is_real == 1)	//考虑2.25.28这种出错处理
-			{
-				printf("Error:Match dot two times in a same digit!\n");
-				exit(0);
-			}
+			
 			token[count++] = resourceProject[pProject];
 			pProject++;
 		}
@@ -147,7 +163,7 @@ void Scanner(int &syn, char resourceProject[], char token[], int &pProject)	//�
 	{
 		token[0] = ch;
 		token[1] = '\0';
-		for (i = 0;i < 32;i++)
+		for (i = 0;i < 33;i++)
 		{
 			if (strcmp(token, operatorOrDelimiter[i]) == 0)
 			{
@@ -243,14 +259,21 @@ void Scanner(int &syn, char resourceProject[], char token[], int &pProject)	//�
 		pProject += 2;
 		return;
 	}
+	else if (resourceProject[pProject] == '.')	//.
+	{
+		strcpy(token, ".");
+		syn = 43;
+		pProject ++;
+	}
 	else if (resourceProject[pProject] == EOF)	//结束符
 	{
 		syn = 0;
+		strcpy(token, "$");
 		return;
 	}
 	else
 	{
-		printf("Error:this character can't be identified : %c \n", ch);	//识别失败，错误处理
+		printf("Error:this character can't be identified : %c row_num: %d \n", ch, row_num);	//识别失败，错误处理
 		exit(0);
 	}
 
@@ -276,9 +299,7 @@ int main()
 	}
 	resourceProject[++pProject] = '\0';
 	fclose(fp);
-	cout << endl << "源程序为：" << endl;
-	cout << resourceProject << endl;
-	filterResource(resourceProject, pProject);
+	filterResource(resourceProject, pProject);		//过滤无用字符
 	pProject = 0;
 	if ((fp1 = fopen("C:\\Users\\许诺\\Desktop\\token.txt", "w+")) == NULL)		//token写入文件
 	{
@@ -302,32 +323,26 @@ int main()
 					break;
 				}
 			}
-			printf("<Iden,%s>\n", token);
-			fprintf(fp1, "<Iden,%s>\n", token);
 		}
-		else if (syn >= 1 && syn <= 12)	//保留字
-		{
-			printf("<reserveword,%s>\n", reserveWord[syn - 1]);
-			fprintf(fp1, "<reserveword,%s>\n", reserveWord[syn - 1]);
-		}
-		else if (syn == 98)	//实数
-		{
-			printf("<RealNo,%s>\n", token);
-			fprintf(fp1, "<RealNo,%s>\n", token);
-		}
-		else if (syn == 99)	//整数
-		{
-			printf("<IntNo,%s>\n", token);
-			fprintf(fp1, "<IntNo,%s>\n", token);
-		}
-		else if (syn >= 21 && syn <= 42)	//算符或者界符
-		{
-			printf("<operatorOrDelimiter,%s>\n", token);
-			fprintf(fp1, "<operatorOrDelimiter,%s>\n", token);
-		}
+		if (syn == 0)break;
+		result_token[result_count].type = syn;
+		strcpy(result_token[result_count].name, token);
+		result_token[result_count].row_num = row_num;
+		result_count++;
+		printf("<%d,%s>\n", syn, token);
+		fprintf(fp1, "<%d,%s>\n", syn, token);
 	}
-
 	fclose(fp1);
+	ProgDef();
+	if (parse_point == result_count)	//推导结束后语法部分的指针应指向最后一个token
+	{
+		printf("this is the right program!\n");
+	}
+	else
+	{
+		wrong_sentence();
+	}
 	return 0;
 }
+
 

@@ -18,12 +18,21 @@
     <ClInclude Include="pch.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="lexical_anaylsis.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="parse_analysis.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="lexical_analysis_new.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="parse_analysis.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
