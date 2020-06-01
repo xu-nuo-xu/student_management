@@ -8,6 +8,7 @@
 #include "string.h"
 #include "lexical_anaylsis.h"
 #include "parse_analysis.h"
+#include <algorithm>
 using namespace std;
 /*****************************保留字表***********************************/
 static char reserveWord[13][20] = {
@@ -26,6 +27,14 @@ int row_num = 1;
 /***************************词法分析中的token识别记录*********************************/
 struct token result_token[1000] = { 0 };
 int result_count=0;
+/**************************词法分析中记录当前声明的数组元素个数****************/
+int array_num = 0;
+/**************************词法分析中记录当前token是否为数组元素****************/
+int array_element = 0;
+/**************************数组声明信息表空闲序号****************/
+int free_array_info = 0;
+/**************************数组声明信息表****************/
+struct array_info array_info[50] = { 0 };
 /****************************语法分析中当前token指针***********************************/
 int parse_point = 0;
 /******************************查找保留字********************************/
@@ -101,13 +110,60 @@ void Scanner(int &syn, char resourceProject[], char token[], int &pProject)	//�
 		row_num++;		//行号+1
 		ch = resourceProject[++pProject];	//向后移一位
 	}
-	if (IsLetter(resourceProject[pProject]))	//首字母为字母，则可能是保留字/标识符
+	if (IsLetter(resourceProject[pProject]))	//首字母为字母，则可能是保留字(含数组)/标识符
 	{
 		token[count++] = resourceProject[pProject];	//收集单词
 		pProject++;
-		while (IsLetter(resourceProject[pProject]) || IsDigit(resourceProject[pProject]))	//如果后跟字母/数字，则还在同一token中
+		while (IsLetter(resourceProject[pProject]) || IsDigit(resourceProject[pProject]) || resourceProject[pProject] == '[' || resourceProject[pProject] == ']' || resourceProject[pProject] == '.')
 		{
-			token[count++] = resourceProject[pProject];
+			if (resourceProject[pProject] == ']')	//只能声明1-99个数组元素 , 两种情况 1.array[1..20] 2.array[1..5]	//两位/一位
+			{
+				char num[2];	//存放数组元素个数,最多两位数
+				if (IsDigit(resourceProject[pProject - 2]) && resourceProject[pProject - 3] == '.' && resourceProject[pProject - 4] == '.')		//第一种声明情况: array[1..20]
+				{
+					num[0] = resourceProject[pProject - 2];
+					num[1] = resourceProject[pProject - 1];
+					array_num = atoi(num);
+				}
+				else if (IsDigit(resourceProject[pProject - 1]) && resourceProject[pProject - 2] == '.' && resourceProject[pProject - 3] == '.') //第二种声明情况: array[1..5]
+				{
+					num[0] = resourceProject[pProject - 1];
+					num[1] = 0;
+					array_num = atoi(num);
+				}
+				else
+				{
+					array_element = 1;	//是数组元素，而非声明
+				}
+				if (array_num != 0)	//说明进行了数组声明，我们如第二种情况:array[1..5]，我们要把array[0],array[1],array[2],array[3],array[4]都放入IDentifierTb中
+				{
+					int find_array_name = 1;	//重新找到数组名
+					char array_name[20];
+					int begin,end,i=0;		//记录数组名开始字符与结束字符下标
+					while (IsLetter(resourceProject[pProject - find_array_name]) == false)	//找到数组名中最后一个字母
+					{
+						find_array_name++;
+					}
+					end = find_array_name;
+					while (IsLetter(resourceProject[pProject - find_array_name]) == true)
+					{
+						find_array_name++;
+					}
+					begin = find_array_name - 1;
+					while (begin >= end)
+					{
+						array_name[i++] = resourceProject[pProject - begin];
+						begin--;
+					}
+					array_name[i] = '\0';	//array_name存放完毕，接下来三行在数组信息表中记录声明的数组信息
+					strcpy(array_info[free_array_info].array_name, array_name);
+					array_info[free_array_info].array_num = array_num;
+					free_array_info++;
+					array_num = 0;	//最后归零，为下次声明数组做准备
+				}
+				
+			}
+			token[count++] = resourceProject[pProject];		//如果后跟字母/数字/Iden[digit..digit](数组元素)，则还在同一token中
 			pProject++;
 		}
 		token[count] = '\0';	//跳出while，token收集完毕
@@ -278,6 +334,47 @@ void Scanner(int &syn, char resourceProject[], char token[], int &pProject)	//�
 	}
 
 }
+void array_indicate_check()		//数组下标检测
+{
+	int i, j = 0, array_num_element, k;
+	char name[50] = { 0 };
+	char number[3] = { 0 };
+	if (result_token[result_count].array_element == 1)	//是数组元素
+	{
+		while (result_token[result_count].name[j] != '[')	//找到数组名
+		{
+			j++;
+		}
+		strncpy(name, result_token[result_count].name, j);
+		if (IsDigit(result_token[result_count].name[j + 2]))	//两位数字
+		{
+			number[0] = result_token[result_count].name[j + 1];
+			number[1] = result_token[result_count].name[j + 2];
+		}
+		else
+		{
+			number[0] = result_token[result_count].name[j + 1];	//一位数字
+		}
+		array_num_element = atoi(number);
+		for (k = 0;k < free_array_info;k++)
+		{
+			if (strcmp(array_info[k].array_name, name) == 0)
+			{
+				if (array_num_element < array_info[k].array_num)
+				{
+					//printf("this array element is legal\n");	//合法情况可以不打印
+				}
+				else
+				{
+					printf("you use an array element: %s\n", result_token[result_count].name);
+					printf("This array element is illegal\nRow num : %d\n",result_token[result_count].row_num);
+					exit(0);
+				}
+			}
+		}
+	}
+
+}
 int main()
 {
 	char resourceProject[1000] = {0};	//源程序
@@ -328,6 +425,12 @@ int main()
 		result_token[result_count].type = syn;
 		strcpy(result_token[result_count].name, token);
 		result_token[result_count].row_num = row_num;
+		if (array_element != 0)
+		{
+			result_token[result_count].array_element = 1;
+			array_element = 0;
+			array_indicate_check();		//当使用了数组元素之后，做一个IDentifierTb中数组是否有超过边界的检测
+		}
 		result_count++;
 		printf("<%d,%s>\n", syn, token);
 		fprintf(fp1, "<%d,%s>\n", syn, token);
