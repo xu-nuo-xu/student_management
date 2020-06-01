@@ -23,5 +23,4 @@ void Expr();			//Expr:			"(" Expr ")" Expr_| "not" Expr Expr_ | Iden Expr_ | Int
 void Expr_();			//Expr_:		"+" Expr Expr_ | "-" Expr Expr_ | "*" Expr Expr_ |"/" Expr Expr_ |
 						//				">" Expr Expr_ | "<" Expr Expr_ | ">=" Expr Expr_ | "<=" Expr Expr_|
 						//				"=" Expr Expr_ | "<>" Expr Expr_ | "and" Expr Expr_ | "or" Expr Expr_ |
-			
-
+int find_Iden();

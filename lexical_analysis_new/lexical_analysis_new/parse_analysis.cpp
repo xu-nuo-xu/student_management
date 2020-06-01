@@ -6,9 +6,11 @@
 #include "lexical_anaylsis.h"
 #include "parse_analysis.h"
 using namespace std;
-/*******************************递归下降文法函数表定义******************************/
 extern int parse_point;		//指向当前识别的result_token
-extern struct token result_token[1000];
+extern struct token result_token[1000];	//词法分析中的识别token表
+char Iden_state_list[200][50];	//变量声明表
+int free_Iden_state_list = 0;
+/*******************************递归下降文法函数定义*****************************/
 int match(const char token[])
 {
 	if (strcmp(token, result_token[parse_point].name)==0)	//终结符匹配成功，指针后移
@@ -23,7 +25,7 @@ int match(const char token[])
 }
 void wrong_sentence()
 {
-	printf("this is a wrong program!\n");
+	printf("Error: this is a wrong program!\n");
 	printf("locate in row:%d\n", result_token[parse_point].row_num);
 	exit(0);
 }
@@ -44,6 +46,11 @@ void Expr()
 	}
 	else if (result_token[parse_point].type == 100)	//Iden Expr_
 	{
+		if (find_Iden() == 0)	//变量是否声明检测
+		{
+			printf("Error: this var : %s isn't stated, row num: %d\n", result_token[parse_point].name, result_token[parse_point].row_num);	//使用未声明变量错误处理
+			exit(0);
+		}		
 		parse_point++;
 		Expr_();
 	}
@@ -225,10 +232,33 @@ void CompState()
 		wrong_sentence();
 	}
 }
+int find_Iden()
+{
+	if (result_token[parse_point].array_element == 1)	//数组元素不在语法分析中检测，在词法分析中已经检测完毕
+	{
+		return 1;
+	}
+	for (int i = 0;i < free_Iden_state_list;i++)
+	{
+		if (strcmp(result_token[parse_point].name, Iden_state_list[i]) == 0)
+		{
+			//printf("this var is stated\n");		//使用了已经声明的变量可以不输出
+			return 1;
+		}
+	}
+	return 0;
+	
+}
+
 void AssignState()
 {
 	if (result_token[parse_point].type == 100)	//Iden ':=' Expr	
 	{
+		if (find_Iden() == 0)
+		{
+			printf("Error: this var : %s isn't stated, row num: %d\n", result_token[parse_point].name, result_token[parse_point].row_num);	//使用未声明变量错误处理
+			exit(0);
+		}
 		parse_point++;
 		if (match(":="))
 		{
@@ -261,6 +291,12 @@ void VarList()
 {
 	if (result_token[parse_point].type == 100)	//Iden VarList_
 	{
+		if (find_Iden() == 1)	//重复定义检测，当成Error处理
+		{
+			printf("Error: repeat state var: %s , row num: %d\n", result_token[parse_point].name, result_token[parse_point].row_num);
+			exit(0);
+		}
+		strcpy(Iden_state_list[free_Iden_state_list++], result_token[parse_point].name);	//添加到变量声明表中
 		parse_point++;
 		VarList_();
 	}
@@ -275,6 +311,12 @@ void VarList_()
 	{
 		if (result_token[parse_point].type == 100)
 		{
+			if (find_Iden() == 1)	//重复定义检测，当成Error处理
+			{
+				printf("Error: repeat state var: %s , row num: %d\n", result_token[parse_point].name, result_token[parse_point].row_num);
+				exit(0);
+			}
+			strcpy(Iden_state_list[free_Iden_state_list++], result_token[parse_point].name);	//添加到变量声明表中
 			parse_point++;
 			VarList_();
 		}
@@ -329,6 +371,7 @@ void ProgDef()		// "program" Iden ';' SubProg '.'
 {
 	if (match("program") && result_token[parse_point++].type == 100 && match(";"))
 	{
+		strcpy(Iden_state_list[free_Iden_state_list++], result_token[parse_point - 2].name);	//添加到变量声明表中
 		SubProg();
 		if (match("."))
 		{

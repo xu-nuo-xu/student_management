@@ -366,7 +366,7 @@ void array_indicate_check()		//数组下标检测
 				}
 				else
 				{
-					printf("you use an array element: %s\n", result_token[result_count].name);
+					printf("Error: you use an array element: %s\n", result_token[result_count].name);
 					printf("This array element is illegal\nRow num : %d\n",result_token[result_count].row_num);
 					exit(0);
 				}
@@ -384,7 +384,7 @@ int main()
 	FILE *fp, *fp1;
 	if ((fp = fopen("C:\\Users\\许诺\\Desktop\\lexical_analysis.txt", "r")) == NULL)
 	{
-		cout << "Can't open source code file!";
+		cout << "Error: Can't open source code file!";
 		exit(0);
 	}
 	resourceProject[pProject] = fgetc(fp);
@@ -400,7 +400,7 @@ int main()
 	pProject = 0;
 	if ((fp1 = fopen("C:\\Users\\许诺\\Desktop\\token.txt", "w+")) == NULL)		//token写入文件
 	{
-		cout << "Can't open token output file!";
+		cout << "Error: Can't open token output file!";
 		exit(0);
 	}
 	while (syn != 0)
@@ -439,7 +439,7 @@ int main()
 	ProgDef();
 	if (parse_point == result_count)	//推导结束后语法部分的指针应指向最后一个token
 	{
-		printf("this is the right program!\n");
+		printf("this is a right program!\n");
 	}
 	else
 	{
