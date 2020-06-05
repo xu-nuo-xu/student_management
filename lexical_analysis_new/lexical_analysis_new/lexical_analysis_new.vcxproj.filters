@@ -24,6 +24,12 @@
     <ClInclude Include="parse_analysis.h">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="global.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="util.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -33,6 +39,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="parse_analysis.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="util.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -9,6 +9,7 @@
 #include "lexical_anaylsis.h"
 #include "parse_analysis.h"
 #include <algorithm>
+#include "util.h"
 using namespace std;
 /*****************************保留字表***********************************/
 static char reserveWord[13][20] = {
@@ -37,6 +38,8 @@ int free_array_info = 0;
 struct array_info array_info[50] = { 0 };
 /****************************语法分析中当前token指针***********************************/
 int parse_point = 0;
+/****************************语法分析中当前token行数***********************************/
+int lineno = 0;
 /******************************查找保留字********************************/
 int searchReserve(char reserveWord[][20], char s[])
 {
@@ -188,13 +191,13 @@ void Scanner(int &syn, char resourceProject[], char token[], int &pProject)	//�
 			{
 				if (resourceProject[pProject + 1] == '.')	//连续两个'.'说明是数组下标
 				{
-					syn = 99;
+					syn = 98;
 					break;
 				}
 				else if (IsDigit(resourceProject[pProject + 1]) && is_real == 0)	//实数情况
 				{
 					is_real = 1;
-					syn = 98;
+					syn = 99;
 				}
 				else if (resourceProject[pProject] == '.' && is_real == 1)	//考虑2.25.28这种出错处理
 				{
@@ -208,9 +211,9 @@ void Scanner(int &syn, char resourceProject[], char token[], int &pProject)	//�
 			pProject++;
 		}
 		token[count] = '\0';
-		if (syn != 98)	//若不是实数(种别码98)则是整数(种别码99)
+		if (syn != 99)	//若不是实数(种别码99)则是整数(种别码98)
 		{
-			syn = 99;
+			syn = 98;
 		}
 		return;
 	}
@@ -436,7 +439,11 @@ int main()
 		fprintf(fp1, "<%d,%s>\n", syn, token);
 	}
 	fclose(fp1);
-	ProgDef();
+	//ProgDef();
+	
+	TreeNode * t = Expr();
+	printTree(t);
+
 	if (parse_point == result_count)	//推导结束后语法部分的指针应指向最后一个token
 	{
 		printf("this is a right program!\n");

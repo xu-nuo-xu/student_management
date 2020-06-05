@@ -14,3 +14,4 @@ struct array_info			//数组声明信息表
 	int array_num;
 };
 extern int free_array_info;	//数组声明信息表空闲序号
+extern int lineno;

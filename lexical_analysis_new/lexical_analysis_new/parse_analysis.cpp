@@ -5,6 +5,8 @@
 #include "string.h"
 #include "lexical_anaylsis.h"
 #include "parse_analysis.h"
+#include "util.h"
+
 using namespace std;
 extern int parse_point;		//指向当前识别的result_token
 extern struct token result_token[1000];	//词法分析中的识别token表
@@ -16,6 +18,7 @@ int match(const char token[])
 	if (strcmp(token, result_token[parse_point].name)==0)	//终结符匹配成功，指针后移
 	{
 		parse_point++;
+		lineno = result_token[parse_point].row_num;
 		return 1;
 	}
 	else
@@ -29,11 +32,11 @@ void wrong_sentence()
 	printf("locate in row:%d\n", result_token[parse_point].row_num);
 	exit(0);
 }
-void Expr()
+TreeNode * Expr()
 {
 	if (match("("))		//'(' Expr ')' Expr_
 	{
-		Expr();
+		TreeNode * t = Expr();
 		if (match(")"))
 		{
 			//do nothing
@@ -42,7 +45,15 @@ void Expr()
 		{
 			wrong_sentence();
 		}
-		Expr_();
+		TreeNode * p = Expr_();
+		if (p != NULL)
+		{
+			p->child[0] = t;
+			return p;
+									//p->child[1]在Expr_中进行设定
+		}							//这里存在一个优先级问题，拿(5+6)+7做例子，第一个+是Expr的返回值，第二个+是
+		else return t;					//Expr_的返回值，而括号中的应当在树的相对低层做孩子
+
 	}
 	else if (result_token[parse_point].type == 100)	//Iden Expr_
 	{
@@ -51,84 +62,156 @@ void Expr()
 			printf("Error: this var : %s isn't stated, row num: %d\n", result_token[parse_point].name, result_token[parse_point].row_num);	//使用未声明变量错误处理
 			exit(0);
 		}		
+		TreeNode * t = newExpNode(IdK);
+		strcpy(t->attr.name, result_token[parse_point].name);
 		parse_point++;
-		Expr_();
+		TreeNode * p = Expr_();
+		if (p != NULL)
+		{
+			p->child[0] = t;	//p->child[1]在Expr_中进行设定
+			return p;
+		}
+		else return t;
 	}
 	else if(result_token[parse_point].type == 98)	//IntNo Expr_
 	{
+		TreeNode * t = newExpNode(NumK);
+		t->attr.val = atoi(result_token[parse_point].name);
 		parse_point++;
-		Expr_();
+		TreeNode * p = Expr_();
+		if (p != NULL)
+		{
+			p->child[0] = t;	//p->child[1]在Expr_中进行设定
+			return p;
+		}
+		else return t;
 	}
 	else if (result_token[parse_point].type == 99)	//RealNo Expr_
 	{
+		TreeNode * t = newExpNode(NumK);
+		t->attr.val = atoi(result_token[parse_point].name);
 		parse_point++;
-		Expr_();
+		TreeNode * p = Expr_();
+		if (p != NULL)
+		{
+			p->child[0] = t;	//p->child[1]在Expr_中进行设定
+			return p;
+		}
+		else return t;
 	}
 }
-void Expr_()
+TreeNode * Expr_()
 {
 	if (match("+"))	//'+' Expr Expr_
 	{
-		Expr();
-		Expr_();
+		TreeNode * t = newExpNode(OpK);
+		strcpy(t->attr.name, "+");
+		TreeNode * p = Expr();
+		Expr_();	//********************感觉每次都是空，暂定
+		t->child[1] = p;
+		return t;
 	}
 	else if (match("-"))	//'-' Expr Expr_
 	{
-		Expr();
-		Expr_();
+		TreeNode * t = newExpNode(OpK);
+		strcpy(t->attr.name, "-");
+		TreeNode * p = Expr();
+		Expr_();	//********************感觉每次都是空，暂定
+		t->child[1] = p;
+		return t;
 	}
 	else if (match("*"))	//'*' Expr Expr_
 	{
-		Expr();
-		Expr_();
+		TreeNode * t = newExpNode(OpK);
+		strcpy(t->attr.name, "*");
+		TreeNode * p = Expr();
+		Expr_();	//********************感觉每次都是空，暂定
+		t->child[1] = p;
+		return t;
 	}
 	else if (match("/"))	//'/' Expr Expr_
 	{
-		Expr();
-		Expr_();
+		TreeNode * t = newExpNode(OpK);
+		strcpy(t->attr.name, "/");
+		TreeNode * p = Expr();
+		Expr_();	//********************感觉每次都是空，暂定
+		t->child[1] = p;
+		return t;
 	}
 	else if (match(">"))	//'>' Expr Expr_
 	{
-		Expr();
-		Expr_();
+		TreeNode * t = newExpNode(OpK);
+		strcpy(t->attr.name, ">");
+		TreeNode * p = Expr();
+		Expr_();	//********************感觉每次都是空，暂定
+		t->child[1] = p;
+		return t;
 	}
 	else if (match("<"))	//'<' Expr Expr_
 	{
-		Expr();
-		Expr_();
+		TreeNode * t = newExpNode(OpK);
+		strcpy(t->attr.name, "<");
+		TreeNode * p = Expr();
+		Expr_();	//********************感觉每次都是空，暂定
+		t->child[1] = p;
+		return t;
 	}
 	else if (match(">="))	//'>=' Expr Expr_
 	{
-		Expr();
-		Expr_();
+		TreeNode * t = newExpNode(OpK);
+		strcpy(t->attr.name, ">=");
+		TreeNode * p = Expr();
+		Expr_();	//********************感觉每次都是空，暂定
+		t->child[1] = p;
+		return t;
 	}
 	else if (match("<="))	//'<=' Expr Expr_
 	{
-		Expr();
-		Expr_();
+		TreeNode * t = newExpNode(OpK);
+		strcpy(t->attr.name, "<=");
+		TreeNode * p = Expr();
+		Expr_();	//********************感觉每次都是空，暂定
+		t->child[1] = p;
+		return t;
 	}
 	else if (match("<>"))	//'<>' Expr Expr_
 	{
-		Expr();
-		Expr_();
+		TreeNode * t = newExpNode(OpK);
+		strcpy(t->attr.name, "<>");
+		TreeNode * p = Expr();
+		Expr_();	//********************感觉每次都是空，暂定
+		t->child[1] = p;
+		return t;
 	}
 	else if (match("="))	//'=' Expr Expr_
 	{
-		Expr();
-		Expr_();
+		TreeNode * t = newExpNode(OpK);
+		strcpy(t->attr.name, "=");
+		TreeNode * p = Expr();
+		Expr_();	//********************感觉每次都是空，暂定
+		t->child[1] = p;
+		return t;
 	}
 	else if (match("and"))	//'and' Expr Expr_
 	{
-		Expr();
-		Expr_();
+		TreeNode * t = newExpNode(OpK);
+		strcpy(t->attr.name, "and");
+		TreeNode * p = Expr();
+		Expr_();	//********************感觉每次都是空，暂定
+		t->child[1] = p;
+		return t;
 	}
 	else if (match("or"))	//'or' Expr Expr_
 	{
-		Expr();
-		Expr_();
+	TreeNode * t = newExpNode(OpK);
+	strcpy(t->attr.name, "or");
+	TreeNode * p = Expr();
+	Expr_();	//********************感觉每次都是空，暂定
+	t->child[1] = p;
+	return t;
 	}
 }
-void Type()
+TreeNode * Type()
 {
 	if (match("integer"))	//"integer"
 	{
@@ -142,8 +225,9 @@ void Type()
 	{
 		wrong_sentence();
 	}
+	return NULL;
 }
-void Statement()
+TreeNode * Statement()
 {
 	if (result_token[parse_point].type == 100)	//AssignState
 	{
@@ -167,15 +251,17 @@ void Statement()
 		parse_point--;
 		CompState();
 	}
+	return NULL;
 }
-void Statement_()
+TreeNode * Statement_()
 {
 	if (match("else"))			//"else" Statement
 	{
 		Statement();
 	}
+	return NULL;
 }
-void IBT()
+ TreeNode * IBT()
 {
 	if (match("if"))		//"if" Expr "then"
 	{
@@ -193,8 +279,9 @@ void IBT()
 	{
 		wrong_sentence();
 	}
+	return NULL;
 }
-void WBD()
+TreeNode * WBD()
 {
 	if (match("while"))		//"while" Expr "do"
 	{
@@ -212,8 +299,9 @@ void WBD()
 	{
 		wrong_sentence();
 	}
+	return NULL;
 }
-void CompState()
+TreeNode * CompState()
 {
 	if (match("begin"))		//"begin" StateList "end"
 	{
@@ -231,6 +319,7 @@ void CompState()
 	{
 		wrong_sentence();
 	}
+	return NULL;
 }
 int find_Iden()
 {
@@ -250,7 +339,7 @@ int find_Iden()
 	
 }
 
-void AssignState()
+TreeNode * AssignState()
 {
 	if (result_token[parse_point].type == 100)	//Iden ':=' Expr	
 	{
@@ -273,21 +362,24 @@ void AssignState()
 	{
 		wrong_sentence();
 	}
+	return NULL;
 }
-void StateList()
+TreeNode * StateList()
 {
 	Statement();	//Statement StateList_
 	StateList_();
+	return NULL;
 }
-void StateList_()
+TreeNode * StateList_()
 {
 	if (match(";"))	//';' Statement StateList_
 	{
 		Statement();
 		StateList_();
 	}
+	return NULL;
 }
-void VarList()		
+TreeNode * VarList()
 {
 	if (result_token[parse_point].type == 100)	//Iden VarList_
 	{
@@ -304,8 +396,9 @@ void VarList()
 	{
 		wrong_sentence();
 	}
+	return NULL;
 }
-void VarList_()
+TreeNode * VarList_()
 {
 	if (match(","))		//',' Iden VarList_
 	{
@@ -325,8 +418,9 @@ void VarList_()
 			wrong_sentence();
 		}
 	}
+	return NULL;
 }
-void VarDefState()
+TreeNode * VarDefState()
 {
 	VarList();			//VarList ':' Type
 	if (match(":"))
@@ -337,21 +431,24 @@ void VarDefState()
 	{
 		wrong_sentence();
 	}
+	return NULL;
 }
-void VarDefList()
+TreeNode * VarDefList()
 {
 	VarDefState();		//VarDefState VarDefList_
 	VarDefList_();
+	return NULL;
 }
-void VarDefList_()
+TreeNode * VarDefList_()
 {
 	if (match(";"))		//';' VarDefState VarDefList'|
 	{
 		VarDefState();
 		VarDefList_();
 	}
+	return NULL;
 }
-void VarDef()
+TreeNode * VarDef()
 {
 	if (match("var"))		//"var" VarDefList 
 	{
@@ -361,13 +458,15 @@ void VarDef()
 	{
 		wrong_sentence();
 	}
+	return NULL;
 }
-void SubProg()
+TreeNode * SubProg()
 {
 	VarDef();		// VarDef CompState
 	CompState();
+	return NULL;
 }
-void ProgDef()		// "program" Iden ';' SubProg '.'
+TreeNode * ProgDef()		// "program" Iden ';' SubProg '.'
 {
 	if (match("program") && result_token[parse_point++].type == 100 && match(";"))
 	{
@@ -386,5 +485,6 @@ void ProgDef()		// "program" Iden ';' SubProg '.'
 	{
 		wrong_sentence();
 	}
+	return NULL;
 }
 
