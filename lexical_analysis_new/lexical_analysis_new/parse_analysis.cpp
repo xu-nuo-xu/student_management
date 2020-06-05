@@ -61,7 +61,7 @@ TreeNode * Expr()
 		{
 			printf("Error: this var : %s isn't stated, row num: %d\n", result_token[parse_point].name, result_token[parse_point].row_num);	//使用未声明变量错误处理
 			exit(0);
-		}		
+		}
 		TreeNode * t = newExpNode(IdK);
 		strcpy(t->attr.name, result_token[parse_point].name);
 		parse_point++;
@@ -75,7 +75,7 @@ TreeNode * Expr()
 	}
 	else if(result_token[parse_point].type == 98)	//IntNo Expr_
 	{
-		TreeNode * t = newExpNode(NumK);
+		TreeNode * t = newExpNode(intNumK);
 		t->attr.val = atoi(result_token[parse_point].name);
 		parse_point++;
 		TreeNode * p = Expr_();
@@ -88,8 +88,10 @@ TreeNode * Expr()
 	}
 	else if (result_token[parse_point].type == 99)	//RealNo Expr_
 	{
-		TreeNode * t = newExpNode(NumK);
-		t->attr.val = atoi(result_token[parse_point].name);
+		TreeNode * t = newExpNode(realNumK);
+		char tmp[50];
+		strcpy(tmp,result_token[parse_point].name);
+		t->attr.vald = atof(tmp);
 		parse_point++;
 		TreeNode * p = Expr_();
 		if (p != NULL)
@@ -213,13 +215,16 @@ TreeNode * Expr_()
 }
 TreeNode * Type()
 {
+	TreeNode *s;
 	if (match("integer"))	//"integer"
 	{
-		//do nothing
+		s = newExpNode(IntK);
+		return s;
 	}
 	else if (match("reald"))	//"reald"
 	{
-		//do nothing
+		s = newExpNode(RealK);
+		return s;
 	}
 	else
 	{
@@ -229,27 +234,58 @@ TreeNode * Type()
 }
 TreeNode * Statement()
 {
+	TreeNode *t, *q, *p, *s = NULL;
 	if (result_token[parse_point].type == 100)	//AssignState
 	{
-		AssignState();
+		s = newStmtNode(AssignK);
+		strcpy(s->attr.name, result_token[parse_point].name);
+		t = AssignState();
+		if (t != NULL)
+		{
+			s->child[0] = t;
+			return s;
+		}
+		return NULL;
 	}
 	else if (match("if"))	//IBT Statement Statement’
 	{
+		s = newStmtNode(IfK);
 		parse_point--;	//在IBT中在重新判断"if"，毕竟现在只是个非终结符
-		IBT();
-		Statement();
-		Statement_();
+		t = IBT();
+		q = Statement();
+		s->child[0] = t;	//test部分
+		s->child[1] = q;	//then部分
+		p = Statement_();
+		if (p != NULL)
+		{
+			s->child[2] = p;	//else部分
+		}
+		return s;
 	}
 	else if (match("while"))	//WBD Statement
 	{
 		parse_point--;
-		WBD();
-		Statement();
+		s = newStmtNode(WhileK);
+		t = WBD();			//test部分
+		q = Statement();	//do部分
+		if (t != NULL && q != NULL)
+		{
+			s->child[0] = t;
+			s->child[1] = q;
+			return s;
+		}
+		return NULL;
 	}
 	else if (match("begin"))	//CompState
 	{
 		parse_point--;
-		CompState();
+		s = newStmtNode(CompK);
+		t = CompState();
+		if (t != NULL)
+		{
+			s->child[0] = t;
+			return s;
+		}
 	}
 	return NULL;
 }
@@ -257,7 +293,8 @@ TreeNode * Statement_()
 {
 	if (match("else"))			//"else" Statement
 	{
-		Statement();
+		TreeNode * s = Statement();
+		return s;
 	}
 	return NULL;
 }
@@ -265,10 +302,10 @@ TreeNode * Statement_()
 {
 	if (match("if"))		//"if" Expr "then"
 	{
-		Expr();
-		if (match("then"))
+		TreeNode *s = Expr();
+		if (match("then") && s!=NULL)
 		{
-			//do nothing
+			return s;
 		}
 		else
 		{
@@ -285,10 +322,10 @@ TreeNode * WBD()
 {
 	if (match("while"))		//"while" Expr "do"
 	{
-		Expr();
-		if (match("do"))
+		TreeNode *s = Expr();
+		if (match("do") && s != NULL)
 		{
-			//do nothing
+			return s;
 		}
 		else
 		{
@@ -305,10 +342,10 @@ TreeNode * CompState()
 {
 	if (match("begin"))		//"begin" StateList "end"
 	{
-		StateList();
-		if (match("end"))
+		TreeNode *s = StateList();
+		if (match("end") && s!=NULL)
 		{
-			//do nothing
+			return s;
 		}
 		else
 		{
@@ -351,7 +388,11 @@ TreeNode * AssignState()
 		parse_point++;
 		if (match(":="))
 		{
-			Expr();
+			TreeNode *s = Expr();
+			if (s != NULL)
+			{
+				return s;
+			}
 		}
 		else
 		{
@@ -366,16 +407,32 @@ TreeNode * AssignState()
 }
 TreeNode * StateList()
 {
-	Statement();	//Statement StateList_
-	StateList_();
+	TreeNode *s = Statement();	//Statement StateList_
+	TreeNode *t = StateList_();
+	if (s != NULL & t != NULL)
+	{
+		s->sibling = t;	//并列关系用sibling
+	}
+	if (s != NULL)
+	{
+		return s;
+	}
 	return NULL;
 }
 TreeNode * StateList_()
 {
 	if (match(";"))	//';' Statement StateList_
 	{
-		Statement();
-		StateList_();
+		TreeNode *s = Statement();
+		TreeNode *t = StateList_();
+		if (s != NULL & t != NULL)
+		{
+			s->sibling = t;	//并列关系用sibling
+		}
+		if (s != NULL)
+		{
+			return s;
+		}
 	}
 	return NULL;
 }
@@ -388,9 +445,19 @@ TreeNode * VarList()
 			printf("Error: repeat state var: %s , row num: %d\n", result_token[parse_point].name, result_token[parse_point].row_num);
 			exit(0);
 		}
+		TreeNode *s = newExpNode(IdK);
+		strcpy(s->attr.name, result_token[parse_point].name);
 		strcpy(Iden_state_list[free_Iden_state_list++], result_token[parse_point].name);	//添加到变量声明表中
 		parse_point++;
-		VarList_();
+		TreeNode *t = VarList_();
+		if (s != NULL)
+		{
+			if (t != NULL)
+			{
+				s->child[0] = t;
+			}
+			return s;
+		}
 	}
 	else
 	{
@@ -409,9 +476,19 @@ TreeNode * VarList_()
 				printf("Error: repeat state var: %s , row num: %d\n", result_token[parse_point].name, result_token[parse_point].row_num);
 				exit(0);
 			}
+			TreeNode *s = newExpNode(IdK);
+			strcpy(s->attr.name, result_token[parse_point].name);
 			strcpy(Iden_state_list[free_Iden_state_list++], result_token[parse_point].name);	//添加到变量声明表中
 			parse_point++;
-			VarList_();
+			TreeNode *t = VarList_();
+			if (s != NULL)
+			{
+				if (t != NULL)
+				{
+					s->child[0] = t;
+				}
+				return s;
+			}
 		}
 		else
 		{
@@ -422,10 +499,15 @@ TreeNode * VarList_()
 }
 TreeNode * VarDefState()
 {
-	VarList();			//VarList ':' Type
+	TreeNode *t = VarList();			//VarList ':' Type
 	if (match(":"))
 	{
-		Type();
+		TreeNode *s = Type();
+		if (s != NULL && t != NULL)
+		{
+			s->child[0] = t;
+			return s;
+		}
 	}
 	else
 	{
@@ -435,16 +517,32 @@ TreeNode * VarDefState()
 }
 TreeNode * VarDefList()
 {
-	VarDefState();		//VarDefState VarDefList_
-	VarDefList_();
+	TreeNode *s = VarDefState();		//VarDefState VarDefList_
+	TreeNode *t = VarDefList_();
+	if (s != NULL)
+	{
+		if (t != NULL)
+		{
+			s->sibling = t;
+		}
+		return s;
+	}
 	return NULL;
 }
 TreeNode * VarDefList_()
 {
 	if (match(";"))		//';' VarDefState VarDefList'|
 	{
-		VarDefState();
-		VarDefList_();
+		TreeNode *s = VarDefState();
+		TreeNode *t = VarDefList_();
+		if (s != NULL)
+		{
+			if (t != NULL)
+			{
+				s->sibling = t;
+			}
+			return s;
+		}
 	}
 	return NULL;
 }
@@ -452,7 +550,13 @@ TreeNode * VarDef()
 {
 	if (match("var"))		//"var" VarDefList 
 	{
-		VarDefList();
+		TreeNode *s = newStmtNode(VarDefK);
+		TreeNode *t = VarDefList();
+		if (s != NULL && t != NULL)
+		{
+			s->child[0] = t;
+			return s;
+		}
 	}
 	else
 	{
@@ -462,19 +566,27 @@ TreeNode * VarDef()
 }
 TreeNode * SubProg()
 {
-	VarDef();		// VarDef CompState
-	CompState();
+	TreeNode *s = VarDef();		// VarDef CompState
+	TreeNode *t = CompState();
+	if (s != NULL && t != NULL)
+	{
+		s->sibling = t;
+		return s;
+	}
 	return NULL;
 }
 TreeNode * ProgDef()		// "program" Iden ';' SubProg '.'
 {
 	if (match("program") && result_token[parse_point++].type == 100 && match(";"))
 	{
+		TreeNode *s = newExpNode(IdK);
+		strcpy(s->attr.name, result_token[parse_point - 2].name);
 		strcpy(Iden_state_list[free_Iden_state_list++], result_token[parse_point - 2].name);	//添加到变量声明表中
-		SubProg();
-		if (match("."))
+		TreeNode *t = SubProg();
+		if (match(".") && s != NULL && t != NULL)
 		{
-			//do nothing
+			s->child[0] = t;
+			return s;
 		}
 		else
 		{

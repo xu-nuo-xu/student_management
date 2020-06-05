@@ -79,6 +79,9 @@ void printTree(TreeNode * tree)
 			case CompK:
 				printf("begin_end\n");
 				break;
+			case VarDefK:
+				printf("VarDef\n");
+				break;
 			default:
 				printf("Unknown StmtNode kind\n");
 				break;
@@ -91,11 +94,20 @@ void printTree(TreeNode * tree)
 				printf("Op: ");
 				printf("%s\0",tree->attr.name);
 				break;
-			case NumK:
+			case intNumK:
 				printf("Num: %d\n", tree->attr.val);
+				break;
+			case realNumK:
+				printf("Num: %.2lf\n", tree->attr.vald);
 				break;
 			case IdK:
 				printf("Id: %s\n", tree->attr.name);
+				break;
+			case IntK:
+				printf("Integer\n");
+				break;
+			case RealK:
+				printf("Reald\n");
 				break;
 			default:
 				printf("Unknown ExpNode kind\n");
@@ -104,7 +116,13 @@ void printTree(TreeNode * tree)
 		}
 		else printf("Unknown node kind\n");
 		for (i = 0;i < MAXCHILDREN;i++)
-			printTree(tree->child[i]);
+		{
+			if (tree->child[i] != NULL)
+			{
+				printTree(tree->child[i]);
+			}
+		}
+			
 		tree = tree->sibling;
 	}
 	UNINDENT;

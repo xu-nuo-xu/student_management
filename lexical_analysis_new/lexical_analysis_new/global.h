@@ -6,8 +6,8 @@
 #include <ctype.h>
 #include <string.h>
 typedef enum { StmtK, ExpK }NodeKind;
-typedef enum { IfK, AssignK, WhileK, CompK }StmtKind;
-typedef enum { OpK, NumK, IdK }ExpKind;
+typedef enum { IfK, AssignK, WhileK, CompK, VarDefK }StmtKind;
+typedef enum { OpK, intNumK,realNumK, IdK, IntK, RealK }ExpKind;
 #define MAXCHILDREN 5
 typedef struct treeNode
 {
@@ -17,7 +17,8 @@ typedef struct treeNode
 	NodeKind nodekind;	//说明是语句节点/表达式节点
 	union { StmtKind stmt; ExpKind exp; } kind;	//语句节点/表达式节点具体形式
 	union {
-		int val;		//当前节点值
-		char name[20];	//当前节点名称
+		int val;		//当前节点值(整数)
+		double vald;		//实数
+		char name[30];	//当前节点名称
 	} attr;
 } TreeNode;
