@@ -17,6 +17,8 @@ TreeNode * newStmtNode(StmtKind kind)
 		t->nodekind = StmtK;
 		t->kind.stmt = kind;
 		t->lineno = lineno;
+		t->PLACE = -1;
+		t->quaternary_num = -1;
 	}
 	return t;
 }
@@ -37,6 +39,7 @@ TreeNode * newExpNode(ExpKind kind)
 		t->kind.exp = kind;
 		t->lineno = lineno;
 		t->PLACE = -1;
+		t->quaternary_num = -1;
 	}
 	return t;
 }

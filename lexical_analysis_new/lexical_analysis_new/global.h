@@ -21,5 +21,6 @@ typedef struct treeNode
 		double vald;		//实数
 		char name[30];	//当前节点名称
 	} attr;
-	int PLACE;
+	int PLACE;			//在符号表中的位置
+	int quaternary_num;	//对应着第几个四元式
 } TreeNode;

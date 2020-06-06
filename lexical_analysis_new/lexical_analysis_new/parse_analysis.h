@@ -36,4 +36,5 @@ struct quaternary
 };
 extern int quaternary_free;
 void generate_quaternary(char[], char[], char[], char[]);
+void print_quaternary();
 int generate_tmp();

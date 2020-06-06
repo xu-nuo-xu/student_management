@@ -80,6 +80,7 @@ TreeNode * Expr()
 		if (p != NULL)
 		{
 			p->child[0] = t;	//p->child[1]在Expr_中进行设定
+			p->quaternary_num = quaternary_free;	//记录四元式序号
 			generate_quaternary(p->attr.name, Iden_state_list[p->child[0]->PLACE], Iden_state_list[p->child[1]->PLACE], Iden_state_list[p->PLACE]);
 			return p;
 		}
@@ -96,6 +97,7 @@ TreeNode * Expr()
 		if (p != NULL)
 		{
 			p->child[0] = t;	//p->child[1]在Expr_中进行设定
+			p->quaternary_num = quaternary_free;	//记录四元式序号
 			generate_quaternary(p->attr.name, Iden_state_list[p->child[0]->PLACE], Iden_state_list[p->child[1]->PLACE], Iden_state_list[p->PLACE]);
 			return p;
 		}
@@ -114,6 +116,7 @@ TreeNode * Expr()
 		if (p != NULL)
 		{
 			p->child[0] = t;	//p->child[1]在Expr_中进行设定
+			p->quaternary_num = quaternary_free;	//记录四元式序号
 			generate_quaternary(p->attr.name, Iden_state_list[p->child[0]->PLACE], Iden_state_list[p->child[1]->PLACE], Iden_state_list[p->PLACE]);
 			return p;
 		}
@@ -272,6 +275,7 @@ TreeNode * Statement()
 		t = AssignState();
 		if (t != NULL)
 		{
+			s->quaternary_num = t->quaternary_num;
 			s->child[0] = t;
 			return s;
 		}
@@ -279,16 +283,44 @@ TreeNode * Statement()
 	}
 	else if (match("if"))	//IBT Statement Statement’
 	{
+		char jnz[5] = "jnz";
+		char j[5] = "j";
+		char zero[5] = "-";
+		char blank[5] = "";
+		char buf[10] = {0};
+		int then_part ,else_part,after_else_part1, after_else_part2;
 		s = newStmtNode(IfK);
 		parse_point--;	//在IBT中在重新判断"if"，毕竟现在只是个非终结符
-		t = IBT();
+		//generate_quaternary(jnz, Iden_state_list[t->PLACE], zero, itoa(q->quaternary_num, buf, 10));	//如果test部分正确，跳转到then部分对应的四元式序列
+		
+		t = IBT();	//对应2-3
+		then_part = quaternary_free;
+
+		generate_quaternary(jnz, Iden_state_list[t->PLACE], zero, blank);		//对应1
+		else_part = quaternary_free;
+		generate_quaternary(j, zero, zero, blank);
 		q = Statement();
+		printf("********%d**********", q->quaternary_num);
+		strcpy(quaternary[then_part].result, itoa(q->quaternary_num + 1, buf, 10));	//回填result(跳转then部分的第一个四元式序号)
+		after_else_part1 = quaternary_free;
+		generate_quaternary(j, zero, zero, blank);
 		s->child[0] = t;	//test部分
 		s->child[1] = q;	//then部分
+		
 		p = Statement_();
+
 		if (p != NULL)
 		{
+			strcpy(quaternary[else_part].result, itoa(p->quaternary_num+1, buf, 10));
+			after_else_part2 = quaternary_free;
+			generate_quaternary(j, zero, zero, blank);
+			strcpy(quaternary[after_else_part1].result, itoa(quaternary_free+1, buf, 10));	
+			strcpy(quaternary[after_else_part2].result, itoa(quaternary_free+1, buf, 10));
 			s->child[2] = p;	//else部分
+		}
+		else
+		{
+			strcpy(quaternary[after_else_part1].result, itoa(quaternary_free+1, buf, 10));
 		}
 		return s;
 	}
@@ -417,16 +449,22 @@ TreeNode * AssignState()
 			printf("Error: this var : %s isn't stated, row num: %d\n", result_token[parse_point].name, result_token[parse_point].row_num);	//使用未声明变量错误处理
 			exit(0);
 		}
+		TreeNode *p = newStmtNode(AssignK);
+		strcpy(p->attr.name, result_token[parse_point].name);
+		p->PLACE = PLACE;
 		parse_point++;
 		if (match(":="))
 		{
 			TreeNode *s = Expr();
 			if (s != NULL)
 			{
+				p->child[0] = s;
 				char assign[5] = ":=";
-				char zero[5] = "0";
+				char zero[5] = "-";
+				p->quaternary_num = quaternary_free;
 				generate_quaternary(assign, Iden_state_list[s->PLACE], zero, Iden_state_list[PLACE]);
-				return s;
+				
+				return p;
 			}
 		}
 		else
@@ -643,7 +681,7 @@ void generate_quaternary(char op[], char arg1[], char arg2[], char result[])
 	strcpy(quaternary[quaternary_free].arg2, arg2);
 	strcpy(quaternary[quaternary_free].result, result);
 	quaternary_free++;
-	printf("( %s , %s , %s , %s )\n", op, arg1, arg2, result);
+	//printf("( %s , %s , %s , %s )\n", op, arg1, arg2, result);
 	return;
 }
 int generate_tmp()	//申请一个临时变量
@@ -655,4 +693,11 @@ int generate_tmp()	//申请一个临时变量
 	strcpy(Iden_state_list[free_Iden_state_list++], tmp_name);
 	tmp++;
 	return free_Iden_state_list - 1;
+}
+void print_quaternary()
+{
+	for (int i = 0;i < quaternary_free;i++)
+	{
+		printf("( %s , %s , %s , %s )\n", quaternary[i].op, quaternary[i].arg1, quaternary[i].arg2, quaternary[i].result);
+	}
 }

@@ -443,6 +443,7 @@ int main()
 	
 	TreeNode * t = ProgDef();
 	printTree(t);
+	print_quaternary();
 	if (parse_point == result_count)	//推导结束后语法部分的指针应指向最后一个token
 	{
 		printf("this is a right program!\n");
