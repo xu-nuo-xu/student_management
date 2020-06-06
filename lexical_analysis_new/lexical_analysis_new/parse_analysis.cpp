@@ -12,6 +12,9 @@ extern int parse_point;		//指向当前识别的result_token
 extern struct token result_token[1000];	//词法分析中的识别token表
 char Iden_state_list[200][50];	//变量声明表
 int free_Iden_state_list = 0;
+int quaternary_free = 0;
+struct quaternary quaternary[100] = { 0 };
+int tmp = 0;
 /*******************************递归下降文法函数定义*****************************/
 int match(const char token[])
 {
@@ -49,14 +52,21 @@ TreeNode * Expr()
 		if (p != NULL)
 		{
 			p->child[0] = t;
+			generate_quaternary(p->attr.name, Iden_state_list[p->child[0]->PLACE], Iden_state_list[p->child[1]->PLACE], Iden_state_list[p->PLACE]);
 			return p;
 									//p->child[1]在Expr_中进行设定
 		}							//这里存在一个优先级问题，拿(5+6)+7做例子，第一个+是Expr的返回值，第二个+是
-		else return t;					//Expr_的返回值，而括号中的应当在树的相对低层做孩子
+		else						//Expr_的返回值，而括号中的应当在树的相对低层做孩子
+		{
+			//generate_quaternary(t->attr.name, Iden_state_list[t->child[0]->PLACE], Iden_state_list[t->child[1]->PLACE], Iden_state_list[t->PLACE]);
+			return t;
+		}
+								
 
 	}
 	else if (result_token[parse_point].type == 100)	//Iden Expr_
 	{
+		int PLACE = find_Iden();
 		if (find_Iden() == 0)	//变量是否声明检测
 		{
 			printf("Error: this var : %s isn't stated, row num: %d\n", result_token[parse_point].name, result_token[parse_point].row_num);	//使用未声明变量错误处理
@@ -64,11 +74,13 @@ TreeNode * Expr()
 		}
 		TreeNode * t = newExpNode(IdK);
 		strcpy(t->attr.name, result_token[parse_point].name);
+		t->PLACE = PLACE;	//指向符号表对应项的指针
 		parse_point++;
 		TreeNode * p = Expr_();
 		if (p != NULL)
 		{
 			p->child[0] = t;	//p->child[1]在Expr_中进行设定
+			generate_quaternary(p->attr.name, Iden_state_list[p->child[0]->PLACE], Iden_state_list[p->child[1]->PLACE], Iden_state_list[p->PLACE]);
 			return p;
 		}
 		else return t;
@@ -77,11 +89,14 @@ TreeNode * Expr()
 	{
 		TreeNode * t = newExpNode(intNumK);
 		t->attr.val = atoi(result_token[parse_point].name);
+		t->PLACE = free_Iden_state_list;	//专为数字设定,此时不代表指针
+		strcpy(Iden_state_list[free_Iden_state_list++], result_token[parse_point].name);
 		parse_point++;
 		TreeNode * p = Expr_();
 		if (p != NULL)
 		{
 			p->child[0] = t;	//p->child[1]在Expr_中进行设定
+			generate_quaternary(p->attr.name, Iden_state_list[p->child[0]->PLACE], Iden_state_list[p->child[1]->PLACE], Iden_state_list[p->PLACE]);
 			return p;
 		}
 		else return t;
@@ -92,11 +107,14 @@ TreeNode * Expr()
 		char tmp[50];
 		strcpy(tmp,result_token[parse_point].name);
 		t->attr.vald = atof(tmp);
+		t->PLACE = free_Iden_state_list;
+		strcpy(Iden_state_list[free_Iden_state_list++], result_token[parse_point].name);
 		parse_point++;
 		TreeNode * p = Expr_();
 		if (p != NULL)
 		{
 			p->child[0] = t;	//p->child[1]在Expr_中进行设定
+			generate_quaternary(p->attr.name, Iden_state_list[p->child[0]->PLACE], Iden_state_list[p->child[1]->PLACE], Iden_state_list[p->PLACE]);
 			return p;
 		}
 		else return t;
@@ -108,6 +126,7 @@ TreeNode * Expr_()
 	{
 		TreeNode * t = newExpNode(OpK);
 		strcpy(t->attr.name, "+");
+		t->PLACE = generate_tmp();
 		TreeNode * p = Expr();
 		Expr_();	//********************感觉每次都是空，暂定
 		t->child[1] = p;
@@ -117,6 +136,7 @@ TreeNode * Expr_()
 	{
 		TreeNode * t = newExpNode(OpK);
 		strcpy(t->attr.name, "-");
+		t->PLACE = generate_tmp();
 		TreeNode * p = Expr();
 		Expr_();	//********************感觉每次都是空，暂定
 		t->child[1] = p;
@@ -126,6 +146,7 @@ TreeNode * Expr_()
 	{
 		TreeNode * t = newExpNode(OpK);
 		strcpy(t->attr.name, "*");
+		t->PLACE = generate_tmp();
 		TreeNode * p = Expr();
 		Expr_();	//********************感觉每次都是空，暂定
 		t->child[1] = p;
@@ -135,6 +156,7 @@ TreeNode * Expr_()
 	{
 		TreeNode * t = newExpNode(OpK);
 		strcpy(t->attr.name, "/");
+		t->PLACE = generate_tmp();
 		TreeNode * p = Expr();
 		Expr_();	//********************感觉每次都是空，暂定
 		t->child[1] = p;
@@ -144,6 +166,7 @@ TreeNode * Expr_()
 	{
 		TreeNode * t = newExpNode(OpK);
 		strcpy(t->attr.name, ">");
+		t->PLACE = generate_tmp();
 		TreeNode * p = Expr();
 		Expr_();	//********************感觉每次都是空，暂定
 		t->child[1] = p;
@@ -153,6 +176,7 @@ TreeNode * Expr_()
 	{
 		TreeNode * t = newExpNode(OpK);
 		strcpy(t->attr.name, "<");
+		t->PLACE = generate_tmp();
 		TreeNode * p = Expr();
 		Expr_();	//********************感觉每次都是空，暂定
 		t->child[1] = p;
@@ -162,6 +186,7 @@ TreeNode * Expr_()
 	{
 		TreeNode * t = newExpNode(OpK);
 		strcpy(t->attr.name, ">=");
+		t->PLACE = generate_tmp();
 		TreeNode * p = Expr();
 		Expr_();	//********************感觉每次都是空，暂定
 		t->child[1] = p;
@@ -171,6 +196,7 @@ TreeNode * Expr_()
 	{
 		TreeNode * t = newExpNode(OpK);
 		strcpy(t->attr.name, "<=");
+		t->PLACE = generate_tmp();
 		TreeNode * p = Expr();
 		Expr_();	//********************感觉每次都是空，暂定
 		t->child[1] = p;
@@ -180,6 +206,7 @@ TreeNode * Expr_()
 	{
 		TreeNode * t = newExpNode(OpK);
 		strcpy(t->attr.name, "<>");
+		t->PLACE = generate_tmp();
 		TreeNode * p = Expr();
 		Expr_();	//********************感觉每次都是空，暂定
 		t->child[1] = p;
@@ -189,6 +216,7 @@ TreeNode * Expr_()
 	{
 		TreeNode * t = newExpNode(OpK);
 		strcpy(t->attr.name, "=");
+		t->PLACE = generate_tmp();
 		TreeNode * p = Expr();
 		Expr_();	//********************感觉每次都是空，暂定
 		t->child[1] = p;
@@ -198,6 +226,7 @@ TreeNode * Expr_()
 	{
 		TreeNode * t = newExpNode(OpK);
 		strcpy(t->attr.name, "and");
+		t->PLACE = generate_tmp();
 		TreeNode * p = Expr();
 		Expr_();	//********************感觉每次都是空，暂定
 		t->child[1] = p;
@@ -207,6 +236,7 @@ TreeNode * Expr_()
 	{
 	TreeNode * t = newExpNode(OpK);
 	strcpy(t->attr.name, "or");
+	t->PLACE = generate_tmp();
 	TreeNode * p = Expr();
 	Expr_();	//********************感觉每次都是空，暂定
 	t->child[1] = p;
@@ -369,7 +399,7 @@ int find_Iden()
 		if (strcmp(result_token[parse_point].name, Iden_state_list[i]) == 0)
 		{
 			//printf("this var is stated\n");		//使用了已经声明的变量可以不输出
-			return 1;
+			return i;
 		}
 	}
 	return 0;
@@ -378,6 +408,8 @@ int find_Iden()
 
 TreeNode * AssignState()
 {
+	int PLACE;
+	PLACE = find_Iden();
 	if (result_token[parse_point].type == 100)	//Iden ':=' Expr	
 	{
 		if (find_Iden() == 0)
@@ -391,6 +423,9 @@ TreeNode * AssignState()
 			TreeNode *s = Expr();
 			if (s != NULL)
 			{
+				char assign[5] = ":=";
+				char zero[5] = "0";
+				generate_quaternary(assign, Iden_state_list[s->PLACE], zero, Iden_state_list[PLACE]);
 				return s;
 			}
 		}
@@ -440,11 +475,11 @@ TreeNode * VarList()
 {
 	if (result_token[parse_point].type == 100)	//Iden VarList_
 	{
-		if (find_Iden() == 1)	//重复定义检测，当成Error处理
+		/*if (find_Iden() == 1)	//重复定义检测，当成Error处理
 		{
 			printf("Error: repeat state var: %s , row num: %d\n", result_token[parse_point].name, result_token[parse_point].row_num);
 			exit(0);
-		}
+		}*/
 		TreeNode *s = newExpNode(IdK);
 		strcpy(s->attr.name, result_token[parse_point].name);
 		strcpy(Iden_state_list[free_Iden_state_list++], result_token[parse_point].name);	//添加到变量声明表中
@@ -471,11 +506,11 @@ TreeNode * VarList_()
 	{
 		if (result_token[parse_point].type == 100)
 		{
-			if (find_Iden() == 1)	//重复定义检测，当成Error处理
+			/*if (find_Iden() == 1)	//重复定义检测，当成Error处理
 			{
 				printf("Error: repeat state var: %s , row num: %d\n", result_token[parse_point].name, result_token[parse_point].row_num);
 				exit(0);
-			}
+			}*/
 			TreeNode *s = newExpNode(IdK);
 			strcpy(s->attr.name, result_token[parse_point].name);
 			strcpy(Iden_state_list[free_Iden_state_list++], result_token[parse_point].name);	//添加到变量声明表中
@@ -600,3 +635,24 @@ TreeNode * ProgDef()		// "program" Iden ';' SubProg '.'
 	return NULL;
 }
 
+/**************************生成四元式相关函数*****************/
+void generate_quaternary(char op[], char arg1[], char arg2[], char result[])
+{
+	strcpy(quaternary[quaternary_free].op, op);
+	strcpy(quaternary[quaternary_free].arg1, arg1);
+	strcpy(quaternary[quaternary_free].arg2, arg2);
+	strcpy(quaternary[quaternary_free].result, result);
+	quaternary_free++;
+	printf("( %s , %s , %s , %s )\n", op, arg1, arg2, result);
+	return;
+}
+int generate_tmp()	//申请一个临时变量
+{
+	char tmp_name[10] = "t";
+	char num[5] = { 0 };
+	itoa(tmp,num,10);
+	strcat(tmp_name,num);
+	strcpy(Iden_state_list[free_Iden_state_list++], tmp_name);
+	tmp++;
+	return free_Iden_state_list - 1;
+}

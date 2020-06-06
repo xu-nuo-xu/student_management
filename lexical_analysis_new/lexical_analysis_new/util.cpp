@@ -36,6 +36,7 @@ TreeNode * newExpNode(ExpKind kind)
 		t->nodekind = ExpK;
 		t->kind.exp = kind;
 		t->lineno = lineno;
+		t->PLACE = -1;
 	}
 	return t;
 }

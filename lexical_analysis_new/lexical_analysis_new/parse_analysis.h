@@ -25,3 +25,15 @@ void wrong_sentence();
 						//				">" Expr Expr_ | "<" Expr Expr_ | ">=" Expr Expr_ | "<=" Expr Expr_|
 						//				"=" Expr Expr_ | "<>" Expr Expr_ | "and" Expr Expr_ | "or" Expr Expr_ |
 int find_Iden();
+extern char Iden_state_list[200][50];	//变量声明表
+extern int free_Iden_state_list;
+struct quaternary
+{
+	char op[50];
+	char arg1[50];
+	char arg2[50];
+	char result[50];
+};
+extern int quaternary_free;
+void generate_quaternary(char[], char[], char[], char[]);
+int generate_tmp();

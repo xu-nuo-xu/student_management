@@ -6,8 +6,8 @@
 #include <ctype.h>
 #include <string.h>
 typedef enum { StmtK, ExpK }NodeKind;
-typedef enum { IfK, AssignK, WhileK, CompK, VarDefK }StmtKind;
-typedef enum { OpK, intNumK,realNumK, IdK, IntK, RealK }ExpKind;
+typedef enum { IfK=0, AssignK, WhileK, CompK, VarDefK }StmtKind;
+typedef enum { OpK=5, intNumK,realNumK, IdK, IntK, RealK }ExpKind;	//IntK,RealK指的是integer,reald(Type),intNumK,realNumK说明该节点是数字
 #define MAXCHILDREN 5
 typedef struct treeNode
 {
@@ -21,4 +21,5 @@ typedef struct treeNode
 		double vald;		//实数
 		char name[30];	//当前节点名称
 	} attr;
+	int PLACE;
 } TreeNode;
