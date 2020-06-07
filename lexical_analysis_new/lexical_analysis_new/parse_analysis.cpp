@@ -268,6 +268,11 @@ TreeNode * Type()
 TreeNode * Statement()
 {
 	TreeNode *t, *q, *p, *s = NULL;
+	char jnz[5] = "jnz";
+	char j[5] = "j";
+	char zero[5] = "-";
+	char blank[5] = "";
+	char buf[10] = { 0 };
 	if (result_token[parse_point].type == 100)	//AssignState
 	{
 		s = newStmtNode(AssignK);
@@ -283,12 +288,8 @@ TreeNode * Statement()
 	}
 	else if (match("if"))	//IBT Statement Statement’
 	{
-		char jnz[5] = "jnz";
-		char j[5] = "j";
-		char zero[5] = "-";
-		char blank[5] = "";
-		char buf[10] = {0};
-		int then_part ,else_part,after_else_part1, after_else_part2;
+		
+		int then_part ,then_part_first,else_part_first,else_part,after_else_part1, after_else_part2;
 		s = newStmtNode(IfK);
 		parse_point--;	//在IBT中在重新判断"if"，毕竟现在只是个非终结符
 	
@@ -297,19 +298,19 @@ TreeNode * Statement()
 		generate_quaternary(jnz, Iden_state_list[t->PLACE], zero, blank);		//对应1
 		else_part = quaternary_free;
 		generate_quaternary(j, zero, zero, blank);
-
+		then_part_first = quaternary_free+1;
 		q = Statement();
-		strcpy(quaternary[then_part].result, itoa(q->quaternary_num + 1, buf, 10));	//回填result(跳转then部分的第一个四元式序号)
+		strcpy(quaternary[then_part].result, itoa(then_part_first, buf, 10));	//回填result(跳转then部分的第一个四元式序号)
 		after_else_part1 = quaternary_free;
 		generate_quaternary(j, zero, zero, blank);
 		s->child[0] = t;	//test部分
 		s->child[1] = q;	//then部分
-		
+		else_part_first = quaternary_free+1;
 		p = Statement_();
 
 		if (p != NULL)
 		{
-			strcpy(quaternary[else_part].result, itoa(p->quaternary_num+1, buf, 10));
+			strcpy(quaternary[else_part].result, itoa(else_part_first, buf, 10));
 			after_else_part2 = quaternary_free;
 			generate_quaternary(j, zero, zero, blank);
 			strcpy(quaternary[after_else_part1].result, itoa(quaternary_free+1, buf, 10));	
@@ -342,10 +343,20 @@ TreeNode * Statement()
 	}
 	else if (match("while"))	//WBD Statement
 	{
+		int before_test,test_part,jump_out,after_while;
 		parse_point--;
 		s = newStmtNode(WhileK);
+		before_test = quaternary_free;
 		t = WBD();			//test部分
+		test_part = quaternary_free;
+		generate_quaternary(jnz, Iden_state_list[t->PLACE], zero, itoa(test_part+3, buf, 10));
+
+		jump_out = quaternary_free;
+		generate_quaternary(j, zero, zero, blank);
 		q = Statement();	//do部分
+		generate_quaternary(j, zero, zero, itoa(before_test +1, buf, 10));
+		after_while = quaternary_free;
+		strcpy(quaternary[jump_out].result, itoa(after_while+1, buf, 10));
 		if (t != NULL && q != NULL)
 		{
 			s->child[0] = t;
@@ -714,6 +725,6 @@ void print_quaternary()
 {
 	for (int i = 0;i < quaternary_free;i++)
 	{
-		printf("( %s , %s , %s , %s )\n", quaternary[i].op, quaternary[i].arg1, quaternary[i].arg2, quaternary[i].result);
+		printf("%d ( %s , %s , %s , %s )\n", i+1 ,quaternary[i].op, quaternary[i].arg1, quaternary[i].arg2, quaternary[i].result);
 	}
 }
