@@ -131,7 +131,7 @@ TreeNode * Expr_()
 		strcpy(t->attr.name, "+");
 		t->PLACE = generate_tmp();
 		TreeNode * p = Expr();
-		Expr_();	//********************感觉每次都是空，暂定
+		Expr_();	
 		t->child[1] = p;
 		return t;
 	}
@@ -141,7 +141,7 @@ TreeNode * Expr_()
 		strcpy(t->attr.name, "-");
 		t->PLACE = generate_tmp();
 		TreeNode * p = Expr();
-		Expr_();	//********************感觉每次都是空，暂定
+		Expr_();	
 		t->child[1] = p;
 		return t;
 	}
@@ -151,7 +151,7 @@ TreeNode * Expr_()
 		strcpy(t->attr.name, "*");
 		t->PLACE = generate_tmp();
 		TreeNode * p = Expr();
-		Expr_();	//********************感觉每次都是空，暂定
+		Expr_();	
 		t->child[1] = p;
 		return t;
 	}
@@ -161,7 +161,7 @@ TreeNode * Expr_()
 		strcpy(t->attr.name, "/");
 		t->PLACE = generate_tmp();
 		TreeNode * p = Expr();
-		Expr_();	//********************感觉每次都是空，暂定
+		Expr_();	
 		t->child[1] = p;
 		return t;
 	}
@@ -171,7 +171,7 @@ TreeNode * Expr_()
 		strcpy(t->attr.name, ">");
 		t->PLACE = generate_tmp();
 		TreeNode * p = Expr();
-		Expr_();	//********************感觉每次都是空，暂定
+		Expr_();	
 		t->child[1] = p;
 		return t;
 	}
@@ -181,7 +181,7 @@ TreeNode * Expr_()
 		strcpy(t->attr.name, "<");
 		t->PLACE = generate_tmp();
 		TreeNode * p = Expr();
-		Expr_();	//********************感觉每次都是空，暂定
+		Expr_();	
 		t->child[1] = p;
 		return t;
 	}
@@ -191,7 +191,7 @@ TreeNode * Expr_()
 		strcpy(t->attr.name, ">=");
 		t->PLACE = generate_tmp();
 		TreeNode * p = Expr();
-		Expr_();	//********************感觉每次都是空，暂定
+		Expr_();	
 		t->child[1] = p;
 		return t;
 	}
@@ -201,7 +201,7 @@ TreeNode * Expr_()
 		strcpy(t->attr.name, "<=");
 		t->PLACE = generate_tmp();
 		TreeNode * p = Expr();
-		Expr_();	//********************感觉每次都是空，暂定
+		Expr_();	
 		t->child[1] = p;
 		return t;
 	}
@@ -211,7 +211,7 @@ TreeNode * Expr_()
 		strcpy(t->attr.name, "<>");
 		t->PLACE = generate_tmp();
 		TreeNode * p = Expr();
-		Expr_();	//********************感觉每次都是空，暂定
+		Expr_();	
 		t->child[1] = p;
 		return t;
 	}
@@ -221,7 +221,7 @@ TreeNode * Expr_()
 		strcpy(t->attr.name, "=");
 		t->PLACE = generate_tmp();
 		TreeNode * p = Expr();
-		Expr_();	//********************感觉每次都是空，暂定
+		Expr_();	
 		t->child[1] = p;
 		return t;
 	}
@@ -231,7 +231,7 @@ TreeNode * Expr_()
 		strcpy(t->attr.name, "and");
 		t->PLACE = generate_tmp();
 		TreeNode * p = Expr();
-		Expr_();	//********************感觉每次都是空，暂定
+		Expr_();	
 		t->child[1] = p;
 		return t;
 	}
@@ -241,7 +241,7 @@ TreeNode * Expr_()
 	strcpy(t->attr.name, "or");
 	t->PLACE = generate_tmp();
 	TreeNode * p = Expr();
-	Expr_();	//********************感觉每次都是空，暂定
+	Expr_();	
 	t->child[1] = p;
 	return t;
 	}
@@ -364,6 +364,19 @@ TreeNode * Statement()
 			return s;
 		}
 		return NULL;
+		/******************while中生成四元式逻辑************************/
+		/*S ： WBD()；生成while的测试部分
+			   
+			   (jnz , 测试部分变量t0 , - , do部分第一个语句)
+
+			   (j , - , - , 跳出while后第一条语句L )
+
+			   do部分语句
+
+			   (j, - , - , S判定处)
+
+		 L ：  (跳出循环语句)*/
+		/******************while中生成四元式逻辑************************/
 	}
 	else if (match("begin"))	//CompState
 	{
@@ -449,10 +462,10 @@ TreeNode * CompState()
 }
 int find_Iden()
 {
-	if (result_token[parse_point].array_element == 1)	//数组元素不在语法分析中检测，在词法分析中已经检测完毕
+	/*if (result_token[parse_point].array_element == 1)	//数组元素不在语法分析中检测，在词法分析中已经检测完毕
 	{
 		return 1;
-	}
+	}*/
 	for (int i = 0;i < free_Iden_state_list;i++)
 	{
 		if (strcmp(result_token[parse_point].name, Iden_state_list[i]) == 0)
@@ -469,6 +482,7 @@ TreeNode * AssignState()
 {
 	int PLACE;
 	PLACE = find_Iden();
+	//printf("*********PLACE:%d**********\n", PLACE);
 	if (result_token[parse_point].type == 100)	//Iden ':=' Expr	
 	{
 		if (find_Iden() == 0)

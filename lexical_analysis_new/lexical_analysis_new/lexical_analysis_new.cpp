@@ -378,6 +378,25 @@ void array_indicate_check()		//数组下标检测
 	}
 
 }
+void set_array_info_to_id_state_list()
+{
+	int i,j;
+	char num[5] = { 0 };
+	char array_name_[20] = { 0 };
+	for (i = 0;i < free_array_info;i++)
+	{
+		for (j = 0;j < array_info[i].array_num;j++)
+		{
+			strcpy(array_name_, "\0");
+			strcpy(array_name_, array_info[i].array_name);
+			strcat(array_name_, "[");
+			strcat(array_name_, itoa(j, num, 10));
+			strcat(array_name_, "]");
+			//printf("*******array_name:%s******\n", array_name_);
+			strcpy(Iden_state_list[free_Iden_state_list++], array_name_);
+		}
+	}
+}
 int main()
 {
 	char resourceProject[1000] = {0};	//源程序
@@ -439,11 +458,12 @@ int main()
 		fprintf(fp1, "<%d,%s>\n", syn, token);
 	}
 	fclose(fp1);
-	//ProgDef();
 	
+	set_array_info_to_id_state_list();
 	TreeNode * t = ProgDef();
 	printTree(t);
 	print_quaternary();
+	
 	if (parse_point == result_count)	//推导结束后语法部分的指针应指向最后一个token
 	{
 		printf("this is a right program!\n");

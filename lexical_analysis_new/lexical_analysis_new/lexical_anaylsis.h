@@ -15,3 +15,4 @@ struct array_info			//数组声明信息表
 };
 extern int free_array_info;	//数组声明信息表空闲序号
 extern int lineno;
+void set_array_info_to_idtb();
