@@ -291,16 +291,14 @@ TreeNode * Statement()
 		int then_part ,else_part,after_else_part1, after_else_part2;
 		s = newStmtNode(IfK);
 		parse_point--;	//在IBT中在重新判断"if"，毕竟现在只是个非终结符
-		//generate_quaternary(jnz, Iden_state_list[t->PLACE], zero, itoa(q->quaternary_num, buf, 10));	//如果test部分正确，跳转到then部分对应的四元式序列
-		
+	
 		t = IBT();	//对应2-3
 		then_part = quaternary_free;
-
 		generate_quaternary(jnz, Iden_state_list[t->PLACE], zero, blank);		//对应1
 		else_part = quaternary_free;
 		generate_quaternary(j, zero, zero, blank);
+
 		q = Statement();
-		printf("********%d**********", q->quaternary_num);
 		strcpy(quaternary[then_part].result, itoa(q->quaternary_num + 1, buf, 10));	//回填result(跳转then部分的第一个四元式序号)
 		after_else_part1 = quaternary_free;
 		generate_quaternary(j, zero, zero, blank);
@@ -320,9 +318,27 @@ TreeNode * Statement()
 		}
 		else
 		{
+			strcpy(quaternary[else_part].result, itoa(quaternary_free + 1, buf, 10));
 			strcpy(quaternary[after_else_part1].result, itoa(quaternary_free+1, buf, 10));
 		}
 		return s;
+		/******************if中生成四元式逻辑************************/
+		/*测试部分IBT()中生成
+
+		(jnz, t->PLACE, -, q->quaternary_num)
+
+		(j, -, -, p->quaternary_num)
+
+		then部分(q->quaternary_num)
+
+		(j, -, -, L)
+
+		else部分(p->quaternary_num)
+
+		(j, -, -, L)
+
+		L: else 之后*/
+		/******************if中生成四元式逻辑************************/
 	}
 	else if (match("while"))	//WBD Statement
 	{
