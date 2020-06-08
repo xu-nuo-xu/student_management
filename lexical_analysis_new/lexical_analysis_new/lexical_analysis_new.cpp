@@ -201,7 +201,7 @@ void Scanner(int &syn, char resourceProject[], char token[], int &pProject)	//�
 				}
 				else if (resourceProject[pProject] == '.' && is_real == 1)	//考虑2.25.28这种出错处理
 				{
-					printf("Error:Match dot two times in a same digit!   row_num : %d\n ", row_num);
+					printf("\nError:Match dot two times in a same digit!   row_num : %d\n ", row_num);
 					exit(0);
 				}
 			}
@@ -332,7 +332,7 @@ void Scanner(int &syn, char resourceProject[], char token[], int &pProject)	//�
 	}
 	else
 	{
-		printf("Error:this character can't be identified : %c row_num: %d \n", ch, row_num);	//识别失败，错误处理
+		printf("\nError:this character can't be identified : %c row_num: %d \n", ch, row_num);	//识别失败，错误处理
 		exit(0);
 	}
 
@@ -369,7 +369,7 @@ void array_indicate_check()		//数组下标检测
 				}
 				else
 				{
-					printf("Error: you use an array element: %s\n", result_token[result_count].name);
+					printf("\nError: you use an array element: %s\n", result_token[result_count].name);
 					printf("This array element is illegal\nRow num : %d\n",result_token[result_count].row_num);
 					exit(0);
 				}
@@ -397,6 +397,15 @@ void set_array_info_to_id_state_list()
 		}
 	}
 }
+void print_iden_state_list()
+{
+	printf("\n***************iden_state_list***************\n");
+	for (int i = 0;i < free_Iden_state_list;i++)
+	{
+		printf("%s  ", Iden_state_list[i]);
+	}
+	printf("\n***************iden_state_list***************\n");
+}
 int main()
 {
 	char resourceProject[1000] = {0};	//源程序
@@ -406,7 +415,7 @@ int main()
 	FILE *fp, *fp1;
 	if ((fp = fopen("C:\\Users\\许诺\\Desktop\\lexical_analysis.txt", "r")) == NULL)
 	{
-		cout << "Error: Can't open source code file!";
+		cout << "\nError: Can't open source code file!";
 		exit(0);
 	}
 	resourceProject[pProject] = fgetc(fp);
@@ -422,7 +431,7 @@ int main()
 	pProject = 0;
 	if ((fp1 = fopen("C:\\Users\\许诺\\Desktop\\token.txt", "w+")) == NULL)		//token写入文件
 	{
-		cout << "Error: Can't open token output file!";
+		cout << "\nError: Can't open token output file!";
 		exit(0);
 	}
 	while (syn != 0)
@@ -454,16 +463,19 @@ int main()
 			array_indicate_check();		//当使用了数组元素之后，做一个IDentifierTb中数组是否有超过边界的检测
 		}
 		result_count++;
-		printf("<%d,%s>\n", syn, token);
-		fprintf(fp1, "<%d,%s>\n", syn, token);
+		printf("<%d,%s>  ", syn, token);
+		fprintf(fp1, "<%d,%s>  ", syn, token);
 	}
 	fclose(fp1);
-	
-	set_array_info_to_id_state_list();
+	set_array_info_to_id_state_list();	//将声明的数组元素加入变量声明表中
 	TreeNode * t = ProgDef();
+	print_iden_state_list();
+	printf("***************AST***************\n");
 	printTree(t);
+	printf("***************AST***************\n");
+	printf("***************quaternary***************\n");
 	print_quaternary();
-	
+	printf("***************quaternary***************\n");
 	if (parse_point == result_count)	//推导结束后语法部分的指针应指向最后一个token
 	{
 		printf("this is a right program!\n");

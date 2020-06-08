@@ -31,7 +31,7 @@ int match(const char token[])
 }
 void wrong_sentence()
 {
-	printf("Error: this is a wrong program!\n");
+	printf("\nError: this is a wrong program!\n");
 	printf("locate in row:%d\n", result_token[parse_point].row_num);
 	exit(0);
 }
@@ -69,7 +69,7 @@ TreeNode * Expr()
 		int PLACE = find_Iden();
 		if (find_Iden() == 0)	//变量是否声明检测
 		{
-			printf("Error: this var : %s isn't stated, row num: %d\n", result_token[parse_point].name, result_token[parse_point].row_num);	//使用未声明变量错误处理
+			printf("\nError: this var : %s isn't stated, row num: %d\n", result_token[parse_point].name, result_token[parse_point].row_num);	//使用未声明变量错误处理
 			exit(0);
 		}
 		TreeNode * t = newExpNode(IdK);
@@ -275,14 +275,14 @@ TreeNode * Statement()
 	char buf[10] = { 0 };
 	if (result_token[parse_point].type == 100)	//AssignState
 	{
-		s = newStmtNode(AssignK);
-		strcpy(s->attr.name, result_token[parse_point].name);
+		//s = newStmtNode(AssignK);
+		//strcpy(s->attr.name, result_token[parse_point].name);
 		t = AssignState();
 		if (t != NULL)
 		{
-			s->quaternary_num = t->quaternary_num;
-			s->child[0] = t;
-			return s;
+			//s->quaternary_num = t->quaternary_num;
+			//s->child[0] = t;
+			return t;
 		}
 		return NULL;
 	}
@@ -487,7 +487,7 @@ TreeNode * AssignState()
 	{
 		if (find_Iden() == 0)
 		{
-			printf("Error: this var : %s isn't stated, row num: %d\n", result_token[parse_point].name, result_token[parse_point].row_num);	//使用未声明变量错误处理
+			printf("\nError: this var : %s isn't stated, row num: %d\n", result_token[parse_point].name, result_token[parse_point].row_num);	//使用未声明变量错误处理
 			exit(0);
 		}
 		TreeNode *p = newStmtNode(AssignK);
@@ -554,11 +554,11 @@ TreeNode * VarList()
 {
 	if (result_token[parse_point].type == 100)	//Iden VarList_
 	{
-		/*if (find_Iden() == 1)	//重复定义检测，当成Error处理
+		if (find_Iden() == 1)	//重复定义检测，当成Error处理
 		{
-			printf("Error: repeat state var: %s , row num: %d\n", result_token[parse_point].name, result_token[parse_point].row_num);
+			printf("\nError: repeat state var: %s , row num: %d\n", result_token[parse_point].name, result_token[parse_point].row_num);
 			exit(0);
-		}*/
+		}
 		TreeNode *s = newExpNode(IdK);
 		strcpy(s->attr.name, result_token[parse_point].name);
 		strcpy(Iden_state_list[free_Iden_state_list++], result_token[parse_point].name);	//添加到变量声明表中
@@ -585,11 +585,11 @@ TreeNode * VarList_()
 	{
 		if (result_token[parse_point].type == 100)
 		{
-			/*if (find_Iden() == 1)	//重复定义检测，当成Error处理
+			if (find_Iden() == 1)	//重复定义检测，当成Error处理
 			{
-				printf("Error: repeat state var: %s , row num: %d\n", result_token[parse_point].name, result_token[parse_point].row_num);
+				printf("\nError: repeat state var: %s , row num: %d\n", result_token[parse_point].name, result_token[parse_point].row_num);
 				exit(0);
-			}*/
+			}
 			TreeNode *s = newExpNode(IdK);
 			strcpy(s->attr.name, result_token[parse_point].name);
 			strcpy(Iden_state_list[free_Iden_state_list++], result_token[parse_point].name);	//添加到变量声明表中
