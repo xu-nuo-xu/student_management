@@ -436,11 +436,20 @@ int main(int argc,char *argv[])
 	int syn = -1, i;
 	int pProject = 0;	//程序指针
 	FILE *fp, *fp1;
-	if ((fp = fopen("C:\\Users\\许诺\\Desktop\\test\\1-关系.txt", "r")) == NULL)
+	fp = stdin;
+	if (argc > 1)
+	{
+		if ((fp = fopen(argv[1], "r")) == NULL)
+		{
+			cout << "\nError: Can't open source code file!";
+			exit(0);
+		}
+	}
+	/*if ((fp = fopen("C:\\Users\\许诺\\Desktop\\test\\1-关系.txt", "r")) == NULL)
 	{
 		cout << "\nError: Can't open source code file!";
 		exit(0);
-	}
+	}*/
 	resourceProject[pProject] = fgetc(fp);
 
 	while (resourceProject[pProject] != EOF)	//将源代码录入resourceProject中
@@ -491,6 +500,18 @@ int main(int argc,char *argv[])
 	}
 	fclose(fp1);
 	set_array_info_to_id_state_list();	//将声明的数组元素加入变量声明表中
+	if (strcmp(result_token[result_count - 1].name, "end.")==0)
+	{
+		strcpy(result_token[result_count - 1].name, "end");
+		result_token[result_count - 1].type = 4;
+		strcpy(result_token[result_count].name, ".");
+		result_token[result_count].type = 43;
+		result_token[result_count].row_num = row_num;
+		result_count++;
+	}
+	/*printf("\n******************last token*****************\n");
+	printf("%s\n", result_token[result_count-1].name);*/
+	
 	TreeNode * t = ProgDef();
 	print_iden_state_list();
 	printf("***************AST***************\n");
