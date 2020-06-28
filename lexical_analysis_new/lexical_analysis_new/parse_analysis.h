@@ -20,7 +20,7 @@ void wrong_sentence();
  TreeNode * AssignState();		//AssignState:	Iden ':=' Expr
  TreeNode * IBT();				//IBT:			"if" Expr "then"
  TreeNode * WBD();				//WBD:			"while" Expr "do"
- TreeNode * Expr();			//Expr:			"(" Expr ")" Expr_| "not" Expr Expr_ | Iden Expr_ | IntNo Expr_	| RealNo Expr_ 				
+ TreeNode * Expr();			//Expr:			"(" Expr ")" Expr_| "not" Expr Expr_ | Iden Expr_ | IntNo Expr_	| RealNo Expr_ 	| "-" Expr Expr'			
  TreeNode * Expr_();			//Expr_:		"+" Expr Expr_ | "-" Expr Expr_ | "*" Expr Expr_ |"/" Expr Expr_ |
 						//				">" Expr Expr_ | "<" Expr Expr_ | ">=" Expr Expr_ | "<=" Expr Expr_|
 						//				"=" Expr Expr_ | "<>" Expr Expr_ | "and" Expr Expr_ | "or" Expr Expr_ |

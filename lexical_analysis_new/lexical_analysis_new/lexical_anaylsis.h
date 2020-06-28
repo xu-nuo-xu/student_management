@@ -1,7 +1,7 @@
 #pragma once
 struct token {
 	int type;	//种别码
-	char name[10];	//内容
+	char name[50];	//内容
 	int row_num;
 	int array_element;	//是否为数组元素
 };

@@ -64,6 +64,17 @@ TreeNode * Expr()
 								
 
 	}
+	else if (match("-"))	// "-" Expr Expr_
+	{
+		TreeNode * t = newExpNode(OpK);
+		strcpy(t->attr.name, "-");
+		t->PLACE = generate_tmp();
+		TreeNode * p = Expr();
+		Expr_();
+		t->child[1] = p;
+		return t;
+
+	}
 	else if (result_token[parse_point].type == 100)	//Iden Expr_
 	{
 		int PLACE = find_Iden();
@@ -122,6 +133,7 @@ TreeNode * Expr()
 		}
 		else return t;
 	}
+
 }
 TreeNode * Expr_()
 {

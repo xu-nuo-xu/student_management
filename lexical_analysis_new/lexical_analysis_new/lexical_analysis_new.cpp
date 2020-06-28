@@ -41,12 +41,30 @@ int parse_point = 0;
 /****************************语法分析中当前token行数***********************************/
 int lineno = 0;
 /******************************查找保留字********************************/
+char *tolow(char s[])
+{
+	int i = 0;
+	char tmp[50] = { 0 };
+	strcpy(tmp, s);
+	while (tmp[i] != '\0')
+	{
+		if (tmp[i] >= 'A' && tmp[i] <= 'Z')
+		{
+			tmp[i] += 32;
+		}
+		i++;
+	}
+	return tmp;
+}
 int searchReserve(char reserveWord[][20], char s[])
 {
+	char tmp[50] = { 0 };
+	strcpy(tmp, tolow(s));
 	for (int i = 0;i < 13;i++)
 	{
-		if (strcmp(reserveWord[i], s) == 0)
+		if (strcmp(reserveWord[i], tmp) == 0)
 		{
+			strcpy(s, tolow(s));
 			return i + 1;	//保留字查找成功，返回相应种别码
 		}
 	}
@@ -112,6 +130,11 @@ void Scanner(int &syn, char resourceProject[], char token[], int &pProject)	//�
 	{
 		row_num++;		//行号+1
 		ch = resourceProject[++pProject];	//向后移一位
+	}
+	while (ch == ' ')	//跳过源程序空格
+	{
+		pProject++;
+		ch = resourceProject[pProject];
 	}
 	if (IsLetter(resourceProject[pProject]))	//首字母为字母，则可能是保留字(含数组)/标识符
 	{
@@ -406,14 +429,14 @@ void print_iden_state_list()
 	}
 	printf("\n***************iden_state_list***************\n");
 }
-int main()
+int main(int argc,char *argv[])
 {
 	char resourceProject[1000] = {0};	//源程序
-	char token[30] = { 0 };
+	char token[50] = { 0 };
 	int syn = -1, i;
 	int pProject = 0;	//程序指针
 	FILE *fp, *fp1;
-	if ((fp = fopen("C:\\Users\\许诺\\Desktop\\lexical_analysis.txt", "r")) == NULL)
+	if ((fp = fopen("C:\\Users\\许诺\\Desktop\\test\\1-关系.txt", "r")) == NULL)
 	{
 		cout << "\nError: Can't open source code file!";
 		exit(0);
@@ -484,6 +507,7 @@ int main()
 	{
 		wrong_sentence();
 	}
+	system("pause");
 	return 0;
 }
 
